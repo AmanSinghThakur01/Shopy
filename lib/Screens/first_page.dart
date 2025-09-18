@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:pick_and_pay/Screens/Cart_screen.dart';
 import 'package:pick_and_pay/Screens/Home_screen.dart';
 import 'package:pick_and_pay/Screens/Setting_screen.dart';
@@ -48,14 +49,14 @@ class _FirstPageState extends State<FirstPage> {
         ],
       ),
       body: _pages[_selectedindex],
-      bottomNavigationBar: BottomNavigationBar(
-          currentIndex: _selectedindex ,
-          onTap: bottomnavigation,
-          items: [
-        BottomNavigationBarItem(icon: Icon(Icons.home_filled), label: 'Home'),
-        BottomNavigationBarItem(icon: Icon(Icons.shopping_bag_outlined), label: 'Cart list'),
-        BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Setting'),
-      ]),
+      bottomNavigationBar: GNav(tabs: [
+        GButton(icon: Icons.home,
+        text: ' Home',
+        ),
+        GButton(icon: Icons.shopping_bag_outlined,text: 'Cart',),
+        GButton(icon: Icons.settings,text: ' Setting',),
+
+      ],)
     );
   }
 }

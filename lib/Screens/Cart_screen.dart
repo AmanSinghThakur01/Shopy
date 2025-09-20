@@ -5,7 +5,6 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.pinkAccent[100],
 body: Center(child: Text(" Cart Screen ", style: TextStyle( fontSize: 25),),),
     );
   }

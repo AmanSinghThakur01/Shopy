@@ -15,9 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: ' Pick&Pay - Ecommerce App ',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-      ),
+
       home: FirstPage(),
       routes: {
         '/firstpage': (context)=> FirstPage(),

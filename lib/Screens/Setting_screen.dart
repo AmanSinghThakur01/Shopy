@@ -5,7 +5,7 @@ class SettingScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(child: Text(" Setting Screen  "),),
+      body: Center(child: Text(" Setting Screen",style: TextStyle( fontSize: 50, color: Colors.purplek),,),),
     );
   }
 }

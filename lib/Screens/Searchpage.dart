@@ -15,7 +15,7 @@ class _SearchpageState extends State<Searchpage> {
         title: TextField(
           autofocus: true,
           decoration: InputDecoration(
-            hintText: 'Search...',
+            hintText: 'Search ....',
             border: InputBorder.none,
           ),
         ),

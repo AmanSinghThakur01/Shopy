@@ -99,12 +99,64 @@ class HomeScreen extends StatelessWidget {
                 ),
                 itemCount: 10,
                 itemBuilder: (context, index) {
-                  return Card(
-                    color: Colors.teal[200],
-                    child: Center(
-                      child: Text("Product ${index + 1}"),
-                    ),
+                  return GestureDetector(
+                    onTap: (){
+                      showDialog(
+                        context: context,
+                        builder: (context) {
+                          return AlertDialog(
+                            title: const Text("Navigate to product page"),
+                            content: const Text("soon you will be navigate to product screen now its  under development"),
+                            actions: [
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                                child: const Text("Ok"),
+                              )
+                            ],
+                          );
+                        },
+                      );
+                    },
+                    child: Container(
+
+
+                        decoration: BoxDecoration(
+                          color: Colors.grey.withOpacity(0.1),
+                          borderRadius: BorderRadius.circular(15),
+                          image: DecorationImage(
+                            image: NetworkImage(""),
+                            fit: BoxFit.cover, // 🔹 Ful
+                            // l cover
+                          ),
+                        ),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.end,
+                              children: [
+                                Icon(Icons.favorite_border_outlined,
+                                color: Colors.red,
+
+                                ),
+
+                              ],
+                            ),
+                            SizedBox(
+                             height:100,
+                              width: 130,
+                              child:Image.network(
+                                fit: BoxFit.fill,
+                                "https://static.vecteezy.com/system/resources/previews/048/635/824/non_2x/laptop-mockup-with-background-for-high-resolution-digital-content-and-web-interface-free-photo.jpg"),
+                            ),
+                            Text(" product name", style: TextStyle( fontSize: 20),),
+                            Text(" price : 500", style: TextStyle( fontSize: 20),),
+                          ],
+                        ),
+                      ),
                   );
+
                 },
               ),
             ),

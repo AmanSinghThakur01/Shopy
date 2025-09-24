@@ -1,12 +1,18 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http ;
+import 'dart:convert';
+
+
+import '../services/Api_services.dart';
 class Searchpage extends StatefulWidget {
   const Searchpage({super.key});
-
   @override
   State<Searchpage> createState() => _SearchpageState();
 }
 
 class _SearchpageState extends State<Searchpage> {
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,7 +26,15 @@ class _SearchpageState extends State<Searchpage> {
           ),
         ),
       ),
-      body: Container(), // Search results
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(" hy"),
+            ElevatedButton(onPressed: Api.GetData, child: Text('Get Data'), )
+          ],
+        ),
+      ), // Search results
     );
   }
 }

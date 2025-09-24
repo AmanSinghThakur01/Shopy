@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:pick_and_pay/model/model.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+final  List  Product = [
+
+  ];
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -80,6 +89,7 @@ class HomeScreen extends StatelessWidget {
                 itemCount: 12,
                 itemBuilder: (context, index) {
                   return Card(
+
                     color: Colors.purple[200],
                     child: Center(
                       child: Text("Item ${index + 1}"),
@@ -122,40 +132,42 @@ class HomeScreen extends StatelessWidget {
                     child: Container(
 
 
-                        decoration: BoxDecoration(
-                          color: Colors.grey.withOpacity(0.1),
-                          borderRadius: BorderRadius.circular(15),
-                          image: DecorationImage(
-                            image: NetworkImage(""),
-                            fit: BoxFit.cover, // 🔹 Ful
-                            // l cover
-                          ),
-                        ),
-                        child: Column(
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.end,
-                              children: [
-                                Icon(Icons.favorite_border_outlined,
-                                color: Colors.red,
-
-                                ),
-
-                              ],
-                            ),
-                            SizedBox(
-                             height:100,
-                              width: 130,
-                              child:Image.network(
-                                fit: BoxFit.fill,
-                                "https://static.vecteezy.com/system/resources/previews/048/635/824/non_2x/laptop-mockup-with-background-for-high-resolution-digital-content-and-web-interface-free-photo.jpg"),
-                            ),
-                            Text(" product name", style: TextStyle( fontSize: 20),),
-                            Text(" price : 500", style: TextStyle( fontSize: 20),),
-                          ],
+                      decoration: BoxDecoration(
+                        color: Colors.grey.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(15),
+                        image: DecorationImage(
+                          image: NetworkImage(""),
+                          fit: BoxFit.cover, // 🔹 Ful
+                          // l cover
                         ),
                       ),
+                      child: Column(
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              Icon(Icons.favorite_border_outlined,
+                                color: Colors.red,
+
+                              ),
+
+                            ],
+                          ),
+                          SizedBox(
+                            height:100,
+                            width: 130,
+                            child:Image.network(
+                                fit: BoxFit.fill,
+                                "https://static.vecteezy.com/system/resources/previews/048/635/824/non_2x/laptop-mockup-with-background-for-high-resolution-digital-content-and-web-interface-free-photo.jpg"),
+                          ),
+                          Text(" product name", style: TextStyle( fontSize: 20),),
+                          Text(" price : 500", style: TextStyle( fontSize: 20),),
+                        ],
+                      ),
+                    ),
                   );
+
+
 
                 },
               ),

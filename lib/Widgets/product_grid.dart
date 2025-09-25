@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import '../services/Api_services.dart';
 
@@ -23,7 +22,8 @@ class _ProductgridState extends State<Productgrid> {
     try {
       final data = await ApiService.GetData();
       setState(() {
-        ProductsData = data['products']; // Extract products array from JSON response
+        ProductsData =
+        data['products']; // Extract products array from JSON response
         isLoading = false;
       });
     }
@@ -48,31 +48,65 @@ class _ProductgridState extends State<Productgrid> {
       );
     }
     return Scaffold(
-      body: GridView.builder(
+      body: SafeArea(child:
+      GridView.builder(
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 2, mainAxisSpacing: 10, crossAxisSpacing: 10),
+              crossAxisCount: 2,
+              mainAxisSpacing: 0,
+              crossAxisSpacing: 0,
+              childAspectRatio: 0.75), // Added this to give more height
           itemCount: ProductsData.length,
           itemBuilder: (context, index) {
             final product = ProductsData[index];
-            return Padding(
-              padding: const EdgeInsets.all(1),
-              child: Container(
-                margin: EdgeInsets.all(1),
-                color: Colors.pink[50],
-                child: Column(
-                  children: [
-                    Image.network(product['thumbnail'],
-                      width: 130,
+            return Container(
+              margin: EdgeInsets.all(5),
+              padding: EdgeInsets.all(8),
+              decoration: BoxDecoration(
+                  color: Colors.grey.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8.0)
+              ),
+
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Icon(Icons.favorite_border_outlined,
+                        color: Colors.red,
+                      )
+                    ],
+                  ),
+                  Expanded( // Added Expanded here
+                    child: SizedBox(
                       height: 130,
-                      fit: BoxFit.cover,
+                      width: 130,
+                      child: Image.network(
+                        product['thumbnail'], fit: BoxFit.cover,),
                     ),
-                    Text(product['title']),
-                    Text('\$${product['price']}'),
-                  ],
-                ),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(top: 8),
+                    child: Text(product['title'],
+                        maxLines: 2, // Added maxLines
+                        overflow: TextOverflow.ellipsis, // Added overflow handling
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          fontSize: 14, // Reduced font size slightly
+                          fontWeight: FontWeight.bold,
+                        )
+                    ),
+                  ),
+                  Text('\$${product['price'].toString()}'
+,style: TextStyle(
+                      fontSize: 15,
+
+                    ),                  )
+
+                ],
               ),
             );
           }),
+      )
     );
   }
 }

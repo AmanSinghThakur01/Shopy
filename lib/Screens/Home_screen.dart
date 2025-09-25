@@ -77,7 +77,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
+            //  const SizedBox(height: 20),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.6, // Fixed height for grid
                 child: Productgrid(),

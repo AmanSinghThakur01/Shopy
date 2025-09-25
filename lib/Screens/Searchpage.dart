@@ -31,7 +31,7 @@ class _SearchpageState extends State<Searchpage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(" hy"),
-            ElevatedButton(onPressed: Api.GetData, child: Text('Get Data'), )
+
           ],
         ),
       ), // Search results

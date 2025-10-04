@@ -1,4 +1,4 @@
-package com.example.pick_and_pay
+package com.example.to_do_app
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,6 +1,6 @@
 {
-    "name": "pick_and_pay",
-    "short_name": "pick_and_pay",
+    "name": "to_do_app",
+    "short_name": "to_do_app",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pick_n_pay/Screens/Products_showed.dart';
 
 
 class HomeScreen extends StatefulWidget {
@@ -78,7 +79,7 @@ class _HomeScreenState extends State<HomeScreen> {
               //  const SizedBox(height: 20),
               SizedBox(
                 height: MediaQuery.of(context).size.height * 0.6, // Fixed height for grid
-                child: Productgrid(),
+                child: ProductsShowed(),
               ),
             ],
           ),

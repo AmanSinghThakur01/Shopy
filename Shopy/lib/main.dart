@@ -1,11 +1,20 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provider/provider.dart';
 import 'presentation/user/screens/splash/splash_screen.dart';
+import 'provider/onboarding_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => onboardingProvider(),),
+    ],
+    child: const MyApp(),
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -14,26 +23,15 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: SplashScreeen(),
-    );
+   return ScreenUtilInit(
+     designSize: const Size(360, 690),
+     minTextAdapt: true,
+     builder: (context , child){
+       return MaterialApp(
+         home: SplashScreeen(),
+       );
+     },
+   );
   }}
 
 
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({super.key});
-
-  @override
-  State<LoginScreen> createState() => _LoginScreenState();
-}
-
-class _LoginScreenState extends State<LoginScreen> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      body: Center(
-        child: Text("Body"),
-      ),
-    );
-  }
-}

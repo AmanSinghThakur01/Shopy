@@ -7,7 +7,7 @@ class AppConstants {
 }
 
 class AppColors{
-  static const primary = Colors.pink.shade200 ;
+  //static const primary = Colors.pink.shade200 ;
   static const secondary= Color(0XFFCBAACB);
   static const background = Colors.white70;
 }

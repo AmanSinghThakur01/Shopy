@@ -8,13 +8,14 @@ import 'provider/onboarding_screen.dart';
 
 void main() {
 
-  runApp(
-    MultiProvider(providers: [
-      ChangeNotifierProvider(create: (_) => onboardingProvider(),),
-    ],
-    child: const MyApp(),
-    )
-  );
+  // runApp(
+  //   MultiProvider(providers: [
+  //     ChangeNotifierProvider(create: (_) => onboardingProvider(),),
+  //   ],
+  //   child: const MyApp(),
+  //   )
+  // );
+  runApp(MyApp(),);
 }
 
 class MyApp extends StatelessWidget {

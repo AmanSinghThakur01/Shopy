@@ -18,7 +18,7 @@ class _SplashScreeenState extends State<SplashScreeen> {
     super.initState();
     //splash screen after 3 sec navigate to home page
     Timer(Duration(seconds: 3), () {
-      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const OnboardingScreen(),));
+      Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => onboardingscreen(),));
     });
   }
 
@@ -52,6 +52,8 @@ class _SplashScreeenState extends State<SplashScreeen> {
               ),
               Text("SHOPY", style: TextStyle(color: Colors.white,fontSize: 50.sp,fontWeight:FontWeight.bold),),
               Text("S H O P  W I T H  S T Y L E", style: TextStyle(color: Colors.white,fontSize: 18.sp,),),
+              SizedBox(height: 25.h,),
+              Text(" Developed by : Aman Singh Thakur" )
             ],
           ),
         ),

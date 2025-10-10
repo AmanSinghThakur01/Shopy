@@ -1,21 +1,22 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'presentation/user/screens/splash/splash_screen.dart';
 import 'provider/onboarding_screen.dart';
 
-void main() {
-
-  // runApp(
-  //   MultiProvider(providers: [
-  //     ChangeNotifierProvider(create: (_) => onboardingProvider(),),
-  //   ],
-  //   child: const MyApp(),
-  //   )
-  // );
-  runApp(MyApp(),);
+void main() async {
+WidgetsFlutterBinding.ensureInitialized();
+await Firebase.initializeApp();
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (_) => OnboardingProvider(),),
+    ],
+    child: const MyApp(),
+    )
+  );
 }
 
 class MyApp extends StatelessWidget {

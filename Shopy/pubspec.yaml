@@ -66,6 +66,9 @@ flutter:
     - assets/choose_your_product.png
     - assets/get_your_order.png
     - assets/make_payment.png
+    - assets/google_logo.png
+    - assets/apple_logo.png
+    - assets/facebook_logo.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/to/resolution-aware-images

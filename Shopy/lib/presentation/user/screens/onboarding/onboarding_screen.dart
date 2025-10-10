@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:introduction_screen/introduction_screen.dart';
+import 'package:shopy/auth/loginpage.dart';
 class onboardingscreen extends StatefulWidget {
   const onboardingscreen({super.key});
 
@@ -26,7 +27,7 @@ class _onboardingscreenState extends State<onboardingscreen> {
       PageViewModel(
           decoration: PageDecoration(imageFlex: 2,),
           image: Image.asset('assets/get_your_order.png')   ,
-          titleWidget: Text("Get Your Order "),
+          titleWidget: Text("Get Your Order ",style: TextStyle(fontSize: 25.sp),),
           body: "Your order will be delivered quickly Enjoy your products right at your doorstep."),
     ];
   }
@@ -42,7 +43,7 @@ class _onboardingscreenState extends State<onboardingscreen> {
           color: Colors.pinkAccent,
           
         ),
-        onDone: (){print("start Application");},
+        onDone: (){Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Loginpage(),));},
         pages:getpages (),
       ),
     );

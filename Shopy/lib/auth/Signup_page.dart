@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shopy/auth/loginpage.dart';
 import 'package:shopy/custom%20widgets/Ui_helper.dart';
 
 class Signuppage extends StatefulWidget {
@@ -15,6 +16,7 @@ class _SignuppageState extends State<Signuppage> {
   TextEditingController passwordController = TextEditingController();
   TextEditingController confirmpasswordController = TextEditingController();
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -29,15 +31,14 @@ class _SignuppageState extends State<Signuppage> {
                 Align(
                   alignment: Alignment.topLeft,
                   child: Text(
-                    "Welcome\nback!",
+                    "Create an \n account",
                     style: TextStyle(
                       fontSize: 36.sp,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
-
-                SizedBox(height: 25.h),
+                SizedBox(height: 8.h,),
 
                 UiHelper.customtextfield(
                   emailController,
@@ -46,7 +47,7 @@ class _SignuppageState extends State<Signuppage> {
                   false,
                 ),
 
-                SizedBox(height: 15.h),
+
 
                 UiHelper.customtextfield(
                   passwordController,
@@ -62,16 +63,6 @@ class _SignuppageState extends State<Signuppage> {
                 ),
 
                 SizedBox(height: 8.h),
-
-                Align(
-                  alignment: Alignment.topRight,
-                  child: UiHelper.customtextbutton(
-                        () {},
-                    'Forgot Password?',
-                    12.sp,
-                    false,
-                  ),
-                ),
 
                 SizedBox(height: 20.h),
 
@@ -117,7 +108,9 @@ class _SignuppageState extends State<Signuppage> {
                       style: TextStyle(fontSize: 14.sp),
                     ),
                     UiHelper.customtextbutton(
-                          () {},
+                          () {
+                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Loginpage(),));
+                      },
                       'Login',
                       14.sp,
                       true,

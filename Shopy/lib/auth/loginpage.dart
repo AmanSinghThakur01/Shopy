@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shopy/auth/Signup_page.dart';
 import 'package:shopy/custom%20widgets/Ui_helper.dart';
+
 
 class Loginpage extends StatefulWidget {
   const Loginpage({super.key});
@@ -109,7 +111,9 @@ class _LoginpageState extends State<Loginpage> {
                       style: TextStyle(fontSize: 14.sp),
                     ),
                     UiHelper.customtextbutton(
-                          () { Navigator.push(context,MaterialPageRoute(builder: (context) =>Text(""),));},
+                          () {
+                            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Signuppage(),));
+                            },
                       'Sign Up',
                       14.sp,
                       true,

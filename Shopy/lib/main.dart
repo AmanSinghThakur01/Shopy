@@ -29,6 +29,7 @@ class MyApp extends StatelessWidget {
      designSize: const Size(360, 690),
      minTextAdapt: true,
      builder: (context , child){
+
        return MaterialApp(
        home: SplashScreeen(),
 

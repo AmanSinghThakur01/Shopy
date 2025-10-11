@@ -4,7 +4,6 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
-import 'package:shopy/auth/loginpage.dart';
 import 'presentation/user/screens/splash/splash_screen.dart';
 import 'provider/onboarding_screen.dart';
 
@@ -31,7 +30,8 @@ class MyApp extends StatelessWidget {
      minTextAdapt: true,
      builder: (context , child){
        return MaterialApp(
-         home: SplashScreeen(),
+       home: SplashScreeen(),
+
          );
      },
    );

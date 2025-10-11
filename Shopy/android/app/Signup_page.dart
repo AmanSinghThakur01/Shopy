@@ -2,16 +2,18 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopy/custom%20widgets/Ui_helper.dart';
 
-class Loginpage extends StatefulWidget {
-  const Loginpage({super.key});
+class Signuppage extends StatefulWidget {
+  const Signuppage({super.key});
 
   @override
-  State<Loginpage> createState() => _LoginpageState();
+  State<Signuppage> createState() => _SignuppageState();
 }
 
-class _LoginpageState extends State<Loginpage> {
+
+class _SignuppageState extends State<Signuppage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  TextEditingController confirmpasswordController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -52,6 +54,12 @@ class _LoginpageState extends State<Loginpage> {
                   Icons.lock,
                   true,
                 ),
+                UiHelper.customtextfield(
+                  confirmpasswordController,
+                  "ConfirmPassword",
+                  Icons.lock,
+                  true,
+                ),
 
                 SizedBox(height: 8.h),
 
@@ -67,7 +75,7 @@ class _LoginpageState extends State<Loginpage> {
 
                 SizedBox(height: 20.h),
 
-                UiHelper.customElevetedButton(() {}, "Login"),
+                UiHelper.customElevetedButton(() {}, "Create Account"),
 
                 SizedBox(height: 25.h),
 
@@ -105,12 +113,12 @@ class _LoginpageState extends State<Loginpage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      "Create An Account",
+                      "I Already Have an Account",
                       style: TextStyle(fontSize: 14.sp),
                     ),
                     UiHelper.customtextbutton(
-                          () { Navigator.push(context,MaterialPageRoute(builder: (context) =>Text(""),));},
-                      'Sign Up',
+                          () {},
+                      'Login',
                       14.sp,
                       true,
                     ),

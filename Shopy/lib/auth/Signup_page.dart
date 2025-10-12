@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopy/auth/loginpage.dart';
 import 'package:shopy/custom%20widgets/Ui_helper.dart';
+import 'package:shopy/presentation/user/screens/Homepage.dart';
 
 class Signuppage extends StatefulWidget {
   const Signuppage({super.key});
@@ -14,8 +16,25 @@ class Signuppage extends StatefulWidget {
 class _SignuppageState extends State<Signuppage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  TextEditingController confirmpasswordController = TextEditingController();
 
+ signup(  String email , String password)async{
+   if(email =="" && password ==""){
+     UiHelper.CustomAlertBox(context, " Enter Required Fields");
+   }
+   else {
+     UserCredential? userCredential ;
+     try {
+       userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password).then((value){
+         Navigator.push(context,MaterialPageRoute(builder: (context)=> Homepage()));
+       });
+     }
+     on FirebaseAuthException catch( ex){
+       return
+           UiHelper.CustomAlertBox(context, ex.code.toString());
+     }
+   }
+
+ }
 
   @override
   Widget build(BuildContext context) {
@@ -55,18 +74,15 @@ class _SignuppageState extends State<Signuppage> {
                   Icons.lock,
                   true,
                 ),
-                UiHelper.customtextfield(
-                  confirmpasswordController,
-                  "ConfirmPassword",
-                  Icons.lock,
-                  true,
-                ),
+
 
                 SizedBox(height: 8.h),
 
                 SizedBox(height: 20.h),
 
-                UiHelper.customElevetedButton(() {}, "Create Account"),
+                UiHelper.customElevetedButton(() {
+                  signup(emailController.text.toString(), passwordController.text.toString());
+                }, "Create Account"),
 
                 SizedBox(height: 25.h),
 

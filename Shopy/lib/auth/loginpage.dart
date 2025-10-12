@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopy/auth/Signup_page.dart';
 import 'package:shopy/custom%20widgets/Ui_helper.dart';
+import 'package:shopy/presentation/user/screens/Homepage.dart';
 
 
 class Loginpage extends StatefulWidget {
@@ -14,6 +16,23 @@ class Loginpage extends StatefulWidget {
 class _LoginpageState extends State<Loginpage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
+  login(String email , String  password) async{
+    if(email==""&& password =="") {
+      return UiHelper.CustomAlertBox(context, "Enter Required Fields");
+    }
+    else {
+      UserCredential ? usercredentail ;
+      try {
+        usercredentail = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value) {
+          return Navigator.push(context, MaterialPageRoute(builder: (context) => Homepage()));
+        },);
+
+      }
+      on FirebaseAuthException catch (ex){
+        return UiHelper.CustomAlertBox(context, ex.code.toString());
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,7 +88,10 @@ class _LoginpageState extends State<Loginpage> {
 
                 SizedBox(height: 20.h),
 
-                UiHelper.customElevetedButton(() {}, "Login"),
+                UiHelper.customElevetedButton(() {
+                  login(emailController.text.toString(), passwordController.text.toString());
+
+                }, "Login"),
 
                 SizedBox(height: 25.h),
 

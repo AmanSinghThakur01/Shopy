@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopy/auth/Signup_page.dart';
+import 'package:shopy/auth/forgotpassword.dart';
 import 'package:shopy/custom%20widgets/Ui_helper.dart';
 import 'package:shopy/presentation/user/screens/Homepage.dart';
 
@@ -79,7 +80,9 @@ class _LoginpageState extends State<Loginpage> {
                 Align(
                   alignment: Alignment.topRight,
                   child: UiHelper.customtextbutton(
-                        () {},
+                        () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Forgotpassword(),));
+                        },
                     'Forgot Password?',
                     12.sp,
                     false,
@@ -160,3 +163,4 @@ class _LoginpageState extends State<Loginpage> {
   }
 }
 
+ 

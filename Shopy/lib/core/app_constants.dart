@@ -9,5 +9,5 @@ class AppConstants {
 class AppColors{
 
   static const secondary= Color(0XFFCBAACB);
-  static const background = Colors.white70;
+  static const background = Colors.grey;
 }

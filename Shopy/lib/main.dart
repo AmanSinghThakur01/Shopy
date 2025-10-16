@@ -33,7 +33,7 @@ class MyApp extends StatelessWidget {
      builder: (context , child){
 
        return MaterialApp(
-       home: SafeArea(child: Homepage()),
+       home: SafeArea(child: SplashScreeen()),
 
          );
      },

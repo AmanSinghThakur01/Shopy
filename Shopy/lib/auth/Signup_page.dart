@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopy/auth/loginpage.dart';
 import 'package:shopy/custom%20widgets/Ui_helper.dart';
-import 'package:shopy/presentation/user/screens/Homepage.dart';
+import 'package:shopy/presentation/user/screens/FirstPage.dart';
+
 
 class Signuppage extends StatefulWidget {
   const Signuppage({super.key});
@@ -25,7 +26,7 @@ class _SignuppageState extends State<Signuppage> {
      UserCredential? userCredential ;
      try {
        userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password).then((value){
-         Navigator.push(context,MaterialPageRoute(builder: (context)=> Homepage()));
+         Navigator.push(context,MaterialPageRoute(builder: (context)=> Firstpage()));
        });
      }
      on FirebaseAuthException catch( ex){

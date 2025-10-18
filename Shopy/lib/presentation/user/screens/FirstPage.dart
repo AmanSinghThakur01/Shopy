@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:shopy/core/app_constants.dart';
 import 'package:shopy/presentation/user/screens/CartScreen.dart';
 import 'package:shopy/presentation/user/screens/HomeScreen.dart';
 import 'package:shopy/presentation/user/screens/SearchScreen.dart';
@@ -14,7 +13,7 @@ class Firstpage extends StatefulWidget {
 }
 
 class _FirstpageState extends State<Firstpage> {
-  List _pages = [
+  final List<Widget> _pages = [
     Homescreen(),
     Wishlistscreen(),
     Cartscreen(),
@@ -25,15 +24,15 @@ class _FirstpageState extends State<Firstpage> {
   int _selectedIndex = 0;
 
   void setIndex(int index) {
-    setState(() {
-      _selectedIndex = index;
-    });
+    setState(() => _selectedIndex = index);
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        backgroundColor: Colors.white,
+        elevation: 0,
         centerTitle: true,
         title: const Text(
           "Shopy",
@@ -43,7 +42,7 @@ class _FirstpageState extends State<Firstpage> {
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: const [Icon(Icons.person)],
+        actions: const [Icon(Icons.person, color: Colors.grey)],
       ),
       body: _pages[_selectedIndex],
       bottomNavigationBar: BottomNavigationBar(

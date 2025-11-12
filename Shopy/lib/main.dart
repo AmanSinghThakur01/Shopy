@@ -5,7 +5,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provider/provider.dart';
 import 'package:shopy/auth/login_status_checker.dart';
+import 'package:shopy/auth/loginpage.dart';
 import 'package:shopy/presentation/user/screens/FirstPage.dart';
+import 'package:shopy/responsive/responsive.dart';
 import 'presentation/user/screens/splash/splash_screen.dart';
 import 'provider/onboarding_screen.dart';
 
@@ -37,15 +39,12 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      designSize: const Size(360, 690),
-      minTextAdapt: true,
-      builder: (context, child) {
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          home: const SplashScreeen(),
-        );
-      },
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+    home: const SplashScreeen(),
+    // home: Loginpage(),
     );
   }
 }
+
+

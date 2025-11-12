@@ -1,10 +1,10 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopy/auth/loginpage.dart';
-import 'package:shopy/custom%20widgets/Ui_helper.dart';
+
 import 'package:shopy/presentation/user/screens/FirstPage.dart';
 
+import '../custom widgets/Ui_helper.dart';
 
 class Signuppage extends StatefulWidget {
   const Signuppage({super.key});
@@ -13,131 +13,141 @@ class Signuppage extends StatefulWidget {
   State<Signuppage> createState() => _SignuppageState();
 }
 
-
 class _SignuppageState extends State<Signuppage> {
-  TextEditingController emailController = TextEditingController();
-  TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
 
- signup(  String email , String password)async{
-   if(email =="" && password ==""){
-     UiHelper.CustomAlertBox(context, " Enter Required Fields");
-   }
-   else {
-     UserCredential? userCredential ;
-     try {
-       userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(email: email, password: password).then((value){
-         Navigator.push(context,MaterialPageRoute(builder: (context)=> Firstpage()));
-       });
-     }
-     on FirebaseAuthException catch( ex){
-       return
-           UiHelper.CustomAlertBox(context, ex.code.toString());
-     }
-   }
+  Future<void> signup(String email, String password) async {
+    if (email.isEmpty || password.isEmpty) {
+      UiHelper.customAlertBox(context, "Enter Required Fields");
+      return;
+    }
 
- }
+    try {
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      Navigator.pushReplacement(
+        context,
+        MaterialPageRoute(builder: (context) => const Firstpage()),
+      );
+    } on FirebaseAuthException catch (ex) {
+      UiHelper.customAlertBox(context, ex.code.toString());
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
+    // ✅ Responsive height/width (expert way)
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SafeArea(
         child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
-            child: Column(
-              children: [
-                SizedBox(height: 30.h),
-                Align(
-                  alignment: Alignment.topLeft,
-                  child: Text(
-                    "Create an \n account",
-                    style: TextStyle(
-                      fontSize: 36.sp,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
+          padding: EdgeInsets.symmetric(horizontal: width * 0.06, vertical: height * 0.02),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: height * 0.04),
+              Text(
+                "Create an\naccount",
+                style: TextStyle(
+                  fontSize: width * 0.09,
+                  fontWeight: FontWeight.bold,
                 ),
-                SizedBox(height: 8.h,),
+              ),
+              SizedBox(height: height * 0.03),
 
-                UiHelper.customtextfield(
-                  emailController,
-                  "Username or Email",
-                  Icons.person,
-                  false,
-                ),
+              // Email Field
+              UiHelper.customTextField(
+                emailController,
+                "Username or Email",
+                Icons.person,
+                false,),
 
+              // Password Field
+      UiHelper.customTextField(passwordController,
+        "Password",
+        Icons.lock,
+        true,),
 
+              SizedBox(height: height * 0.03),
 
-                UiHelper.customtextfield(
-                  passwordController,
-                  "Password",
-                  Icons.lock,
-                  true,
-                ),
+              // Create Account
 
+              UiHelper.customElevatedButton(
+                context,
+                    () {
+                  signup(
+                    emailController.text.trim(),
+                    passwordController.text.trim(),
+                  );
+                },
+                "Create Account",
+              ),
 
-                SizedBox(height: 8.h),
+              SizedBox(height: height * 0.03),
 
-                SizedBox(height: 20.h),
-
-                UiHelper.customElevetedButton(() {
-                  signup(emailController.text.toString(), passwordController.text.toString());
-                }, "Create Account"),
-
-                SizedBox(height: 25.h),
-
-                Text(
+              Center(
+                child: Text(
                   "- OR Continue with -",
-                  style: TextStyle(fontSize: 12.sp),
+                  style: TextStyle(fontSize: width * 0.035),
                 ),
+              ),
 
-                SizedBox(height: 20.h),
 
-                // Social login buttons
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    UiHelper.CustomIconButton(
-                          () {},
-                      Image.asset('assets/google_logo.png'),
-                    ),
-                    SizedBox(width: 10.w),
-                    UiHelper.CustomIconButton(
-                          () {},
-                      Image.asset('assets/apple_logo.png'),
-                    ),
-                    SizedBox(width: 10.w),
-                    UiHelper.CustomIconButton(
-                          () {},
-                      Image.asset('assets/facebook_logo.png'),
-                    ),
-                  ],
-                ),
+              SizedBox(height: height * 0.03),
 
-                SizedBox(height: 25.h),
+              // Social login buttons
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  UiHelper.customIconButton(
+                        () {},
+                    Image.asset('assets/google_logo.png', width: 30) as Icon,
+                  ),
+                  SizedBox(width: width * 0.04),
+                  UiHelper.customIconButton(
+                        () {},
+                    Image.asset('assets/apple_logo.png', width: 30) as Icon,
+                  ),
+                  SizedBox(width: width * 0.04),
+                  UiHelper.customIconButton(
+                        () {},
+                    Image.asset('assets/facebook_logo.png', width: 30) as Icon,
+                  ),
+                ],
+              ),
 
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      "I Already Have an Account",
-                      style: TextStyle(fontSize: 14.sp),
-                    ),
-                    UiHelper.customtextbutton(
-                          () {
-                        Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Loginpage(),));
-                      },
-                      'Login',
-                      14.sp,
-                      true,
-                    ),
-                  ],
-                ),
+              SizedBox(height: height * 0.04),
 
-                SizedBox(height: 20.h),
-              ],
-            ),
+              // Already have account
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "I Already Have an Account",
+                    style: TextStyle(fontSize: width * 0.04),
+                  ),
+
+
+                  UiHelper.customTextButton(
+                        () {
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Loginpage()),
+                      );
+                    },
+                    'Login',
+                    width * 0.04,
+                    true,
+                  ),
+                ],
+              ),
+
+              SizedBox(height: height * 0.04),
+            ],
           ),
         ),
       ),
@@ -151,4 +161,3 @@ class _SignuppageState extends State<Signuppage> {
     super.dispose();
   }
 }
-

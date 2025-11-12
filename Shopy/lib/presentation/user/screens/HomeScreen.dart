@@ -10,7 +10,9 @@ class _HomescreenState extends State<Homescreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
+       appBar: AppBar(
+         title: Text(" Shopy "),
+       ),
     );
   }
 }

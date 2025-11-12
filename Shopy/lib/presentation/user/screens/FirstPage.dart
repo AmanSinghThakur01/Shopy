@@ -29,22 +29,43 @@ class _FirstpageState extends State<Firstpage> {
 
   @override
   Widget build(BuildContext context) {
+    // Screen width se responsive sizes nikal rahe hain
+    double screenWidth = MediaQuery.of(context).size.width;
+
+    double appBarFontSize = screenWidth * 0.06; // AppBar text size
+    double appBarIconSize = screenWidth * 0.07; // AppBar icon size
+    double horizontalPadding = screenWidth * 0.03; // padding
+    double bottomNavIconSize = screenWidth * 0.07; // BottomNavigationBar icon
+    double bottomNavFontSize = screenWidth * 0.04; // BottomNavigationBar text
+
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.white,
         elevation: 0,
         centerTitle: true,
-        title: const Text(
+        title: Text(
           "Shopy",
           style: TextStyle(
             color: Colors.blueAccent,
-            fontSize: 22,
+            fontSize: appBarFontSize,
             fontWeight: FontWeight.bold,
           ),
         ),
-        actions: const [Icon(Icons.person, color: Colors.grey)],
+        actions: [
+          Padding(
+            padding: EdgeInsets.only(right: horizontalPadding),
+            child: Icon(
+              Icons.person,
+              color: Colors.grey,
+              size: appBarIconSize,
+            ),
+          ),
+        ],
       ),
-      body: _pages[_selectedIndex],
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+        child: _pages[_selectedIndex],
+      ),
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedItemColor: Colors.red,
@@ -52,6 +73,9 @@ class _FirstpageState extends State<Firstpage> {
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         onTap: setIndex,
+        iconSize: bottomNavIconSize,
+        selectedFontSize: bottomNavFontSize,
+        unselectedFontSize: bottomNavFontSize,
         items: const [
           BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
           BottomNavigationBarItem(icon: Icon(Icons.favorite_border), label: 'Wishlist'),

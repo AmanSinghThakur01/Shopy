@@ -1,39 +1,59 @@
 import 'package:flutter/material.dart';
-    class Responsive extends StatefulWidget {
-      const Responsive({super.key});
 
-      @override
-      State<Responsive> createState() => _ResponsiveState();
-    }
+class Responsive extends StatelessWidget {
+  const Responsive({super.key});
 
-    class _ResponsiveState extends State<Responsive> {
-      @override
-      Widget build(BuildContext context) {
-        //Get screen width and height
-        final screenWidth = MediaQuery.of(context).size.width ;
-        final screenHeight = MediaQuery.of(context).size.height ;
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("Responsive Container"),
+      ),
+      body: LayoutBuilder(
+        builder: (context, constraints) {
+          // Get available width and height
+          final screenWidth = constraints.maxWidth;
+          final screenHeight = constraints.maxHeight;
 
-        //example scaling logic
-        double fontSize = screenWidth * 0.05;
-        double padding = screenWidth * 0.04 ;
-        double containerWidth = screenWidth *0.8;
+          // Define breakpoints (you can adjust these as needed)
+          double fontSize;
+          double padding;
+          double containerWidth;
 
-        return Scaffold(
-          appBar: AppBar(
-            title: Text("appbar responsive container"),
-          ),
-          body: Center(
+          if (screenWidth < 400) {
+            // Small devices
+            fontSize = 14;
+            padding = 8;
+            containerWidth = screenWidth * 0.9;
+          } else if (screenWidth < 800) {
+            // Medium devices (tablets)
+            fontSize = 18;
+            padding = 16;
+            containerWidth = screenWidth * 0.8;
+          } else {
+            // Large devices (desktops)
+            fontSize = 22;
+            padding = 24;
+            containerWidth = screenWidth * 0.6;
+          }
+
+          return Center(
             child: Container(
               width: containerWidth,
               padding: EdgeInsets.all(padding),
               color: Colors.indigoAccent,
-              child: Text(" Responsive Text Example ",
-              style: TextStyle(fontSize: fontSize),
+              child: Text(
+                "Responsive Text Example",
+                style: TextStyle(
+                  fontSize: fontSize,
+                  color: Colors.white,
+                ),
                 textAlign: TextAlign.center,
               ),
-
             ),
-          ),
-        );
-      }
-    }
+          );
+        },
+      ),
+    );
+  }
+}

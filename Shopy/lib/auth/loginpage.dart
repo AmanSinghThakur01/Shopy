@@ -1,12 +1,9 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:shopy/auth/Signup_page.dart';
 import 'package:shopy/auth/forgotpassword.dart';
-import 'package:shopy/custom%20widgets/Ui_helper.dart';
+import 'package:shopy/custom widgets/Ui_helper.dart';
 import 'package:shopy/presentation/user/screens/FirstPage.dart';
-
-
 
 class Loginpage extends StatefulWidget {
   const Loginpage({super.key});
@@ -18,135 +15,146 @@ class Loginpage extends StatefulWidget {
 class _LoginpageState extends State<Loginpage> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  login(String email , String  password) async{
-    if(email==""&& password =="") {
-      return UiHelper.CustomAlertBox(context, "Enter Required Fields");
-    }
-    else {
-      UserCredential ? usercredentail ;
-      try {
-        usercredentail = await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password).then((value) {
-          return Navigator.push(context, MaterialPageRoute(builder: (context) => Firstpage()));
-        },);
 
-      }
-      on FirebaseAuthException catch (ex){
-        return UiHelper.CustomAlertBox(context, ex.code.toString());
+  login(String email, String password) async {
+    if (email == "" && password == "") {
+      return UiHelper.customAlertBox(context, "Enter Required Fields");
+    } else {
+      UserCredential? userCredential;
+      try {
+        userCredential = await FirebaseAuth.instance
+            .signInWithEmailAndPassword(email: email, password: password)
+            .then(
+              (value) {
+            return Navigator.push(
+              context,
+              MaterialPageRoute(builder: (context) => const Firstpage()),
+            );
+          },
+        );
+      } on FirebaseAuthException catch (ex) {
+        return UiHelper.customAlertBox(context, ex.code.toString());
       }
     }
   }
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final width = size.width;
+    final height = size.height;
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
         child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 20.w, vertical: 10.h),
+          padding: EdgeInsets.symmetric(horizontal: width * 0.05, vertical: height * 0.01),
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              SizedBox(height: 30.h),
-              Align(
-                alignment: Alignment.topLeft,
-                child: Text(
-                  "Welcome\nback!",
-                  style: TextStyle(
-                    fontSize: 36.sp,
-                    fontWeight: FontWeight.bold,
-                  ),
+              SizedBox(height: height * 0.06),
+              Text(
+                "Welcome\nback!",
+                style: TextStyle(
+                  fontSize: width * 0.09,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
 
-              SizedBox(height: 25.h),
+              SizedBox(height: height * 0.03),
 
-              UiHelper.customtextfield(
+              UiHelper.customTextField(
                 emailController,
                 "Username or Email",
                 Icons.person,
                 false,
               ),
 
-              SizedBox(height: 15.h),
+              SizedBox(height: height * 0.02),
 
-              UiHelper.customtextfield(
+              UiHelper.customTextField(
                 passwordController,
                 "Password",
                 Icons.lock,
                 true,
               ),
 
-              SizedBox(height: 8.h),
+              SizedBox(height: height * 0.01),
 
               Align(
                 alignment: Alignment.topRight,
-                child: UiHelper.customtextbutton(
+                child: UiHelper.customTextButton(
                       () {
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => Forgotpassword(),));
-                      },
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const Forgotpassword()),
+                    );
+                  },
                   'Forgot Password?',
-                  12.sp,
+                  width * 0.035,
                   false,
                 ),
               ),
 
-              SizedBox(height: 20.h),
+              SizedBox(height: height * 0.03),
 
-              UiHelper.customElevetedButton(() {
-                login(emailController.text.toString(), passwordController.text.toString());
-
-              }, "Login"),
-
-              SizedBox(height: 25.h),
-
-              Text(
-                "- OR Continue with -",
-                style: TextStyle(fontSize: 12.sp),
+              UiHelper.customElevatedButton(
+                context,
+                    () {
+                  login(
+                    emailController.text.trim(),
+                    passwordController.text.trim(),
+                  );
+                },
+                "Login",
               ),
 
-              SizedBox(height: 20.h),
+              SizedBox(height: height * 0.03),
 
-              // Social login buttons
+              Center(
+                child: Text(
+                  "- OR Continue with -",
+                  style: TextStyle(fontSize: width * 0.035),
+                ),
+              ),
+
+              SizedBox(height: height * 0.03),
+
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  UiHelper.CustomIconButton(
-                        () {},
-                    Image.asset('assets/google_logo.png'),
-                  ),
-                  SizedBox(width: 10.w),
-                  UiHelper.CustomIconButton(
-                        () {},
-                    Image.asset('assets/apple_logo.png'),
-                  ),
-                  SizedBox(width: 10.w),
-                  UiHelper.CustomIconButton(
-                        () {},
-                    Image.asset('assets/facebook_logo.png'),
-                  ),
+                  UiHelper.customIconButton(() {}, Image.asset('assets/google_logo.png')),
+                  SizedBox(width: width * 0.04),
+                  UiHelper.customIconButton(() {}, Image.asset('assets/apple_logo.png')),
+                  SizedBox(width: width * 0.04),
+                  UiHelper.customIconButton(() {}, Image.asset('assets/facebook_logo.png')),
                 ],
               ),
 
-              SizedBox(height: 25.h),
+              SizedBox(height: height * 0.04),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
                     "Create An Account",
-                    style: TextStyle(fontSize: 14.sp),
+                    style: TextStyle(fontSize: width * 0.04),
                   ),
-                  UiHelper.customtextbutton(
+                  UiHelper.customTextButton(
                         () {
-                          Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Signuppage(),));
-                          },
+                      Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(builder: (context) => const Signuppage()),
+                      );
+                    },
                     'Sign Up',
-                    14.sp,
+                    width * 0.04,
                     true,
                   ),
                 ],
               ),
 
-              SizedBox(height: 20.h),
+              SizedBox(height: height * 0.03),
             ],
           ),
         ),
@@ -161,5 +169,3 @@ class _LoginpageState extends State<Loginpage> {
     super.dispose();
   }
 }
-
- 

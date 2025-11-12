@@ -120,14 +120,24 @@ class _LoginpageState extends State<Loginpage> {
 
               SizedBox(height: height * 0.03),
 
+              // FIXED: Corrected 'zzImage' to 'Image'
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  UiHelper.customIconButton(() {}, Image.asset('assets/google_logo.png')),
+                  UiHelper.customIconButton(
+                          () {},
+                      Image.asset('assets/google_logo.png')
+                  ),
                   SizedBox(width: width * 0.04),
-                  UiHelper.customIconButton(() {}, Image.asset('assets/apple_logo.png')),
+                  UiHelper.customIconButton(
+                          () {},
+                      Image.asset('assets/apple_logo.png')
+                  ),
                   SizedBox(width: width * 0.04),
-                  UiHelper.customIconButton(() {}, Image.asset('assets/facebook_logo.png')),
+                  UiHelper.customIconButton(
+                          () {},
+                      Image.asset('assets/facebook_logo.png')
+                  ),
                 ],
               ),
 

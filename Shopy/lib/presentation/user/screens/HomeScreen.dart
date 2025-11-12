@@ -9,11 +9,11 @@ class Homescreen extends StatefulWidget {
 
 class _HomescreenState extends State<Homescreen> {
   final List<Map<String, String>> categories = [
-    {"name": "Beauty", "image": "https://wallpapercave.com/wp/wp12244854.jpg"},
-    {"name": "Fashion", "image": "https://via.placeholder.com/100"},
-    {"name": "Kids", "image": "https://via.placeholder.com/100"},
-    {"name": "Mens", "image": "https://via.placeholder.com/100"},
-    {"name": "Womens", "image": "https://via.placeholder.com/100"},
+    {"name": "Beauty", "image": "assets/beauty.jpg"},
+    {"name": "Fashion", "image": "assets/fashion.jpg"},
+    {"name": "Kids", "image": "assets/kids.jpg"},
+    {"name": "Mens", "image": "assets/man.jpg"},
+    {"name": "Womens", "image": "assets/women.jpg"},
   ];
 
   @override
@@ -126,8 +126,10 @@ class _HomescreenState extends State<Homescreen> {
                   ),
                 ],
               ) ,
+
+              SizedBox(height: 25,),
               SizedBox(
-                height: size.height * 0.12,
+                height: size.height * 0.11, // increased a bit
                 child: ListView.builder(
                   scrollDirection: Axis.horizontal,
                   itemCount: categories.length,
@@ -136,6 +138,7 @@ class _HomescreenState extends State<Homescreen> {
                     return Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10),
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
                           Container(
                             height: 60,
@@ -143,15 +146,16 @@ class _HomescreenState extends State<Homescreen> {
                             decoration: BoxDecoration(
                               shape: BoxShape.circle,
                               image: DecorationImage(
-                                image: NetworkImage(category['image']!),
+                                image: AssetImage(category['image']!),
                                 fit: BoxFit.cover,
                               ),
                             ),
                           ),
-                          const SizedBox(height:1),
+                          const SizedBox(height: 6),
                           Text(
                             category['name']!,
-                            style: const TextStyle(fontSize: 8),
+                            style: const TextStyle(fontSize: 14),
+                            overflow: TextOverflow.ellipsis,
                           ),
                         ],
                       ),
@@ -159,6 +163,94 @@ class _HomescreenState extends State<Homescreen> {
                   },
                 ),
               ),
+
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 16),
+                height: 160,
+                width: double.infinity,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(12),
+                  image: const DecorationImage(
+                    image: AssetImage('assets/banner.jpg'), // or NetworkImage(...)
+                    fit: BoxFit.cover,
+                  ),
+                ),
+                padding: const EdgeInsets.all(16),
+                alignment: Alignment.centerLeft,
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Row(
+                      children: [
+                        const Text(
+                          " Upto ",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                        Text("70%" ,style: TextStyle(color: Colors.yellow,
+                          fontSize: 30,
+                          fontWeight: FontWeight.bold,),),
+                        Text(
+                          " Off",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 22,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ],
+                    ),
+                    Text(
+                      " On trending items",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+
+                      ),
+                    ),
+
+                    const SizedBox(height: 8),
+                    ElevatedButton(
+                      onPressed: () {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: const Text("Button clicked!" ,style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),),
+                            backgroundColor: Colors.pinkAccent.withOpacity(0.3),
+                            duration: const Duration(seconds: 2),
+                          ),
+                        );
+                      },
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Colors.orange.shade300,
+                        foregroundColor: Colors.white,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(25),
+                          side: BorderSide(
+                            color: Colors.white,
+                            width: 2,
+                          )
+                        ),
+                      ),
+                      child: Row(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+
+                          Icon(Icons.shopping_cart , size: 20,),
+                          SizedBox(width: 5,),
+                          const Text("Shop Now" , style: TextStyle(fontWeight: FontWeight.bold , fontSize: 17),),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+
+
 
             ],
           ),

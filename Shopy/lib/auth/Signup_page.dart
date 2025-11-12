@@ -105,17 +105,17 @@ class _SignuppageState extends State<Signuppage> {
                 children: [
                   UiHelper.customIconButton(
                         () {},
-                    Image.asset('assets/google_logo.png', width: 30) as Icon,
+                    Image.asset('assets/google_logo.png', width: 30),
                   ),
                   SizedBox(width: width * 0.04),
                   UiHelper.customIconButton(
                         () {},
-                    Image.asset('assets/apple_logo.png', width: 30) as Icon,
+                    Image.asset('assets/apple_logo.png', width: 30) ,
                   ),
                   SizedBox(width: width * 0.04),
                   UiHelper.customIconButton(
                         () {},
-                    Image.asset('assets/facebook_logo.png', width: 30) as Icon,
+                    Image.asset('assets/facebook_logo.png', width: 30),
                   ),
                 ],
               ),

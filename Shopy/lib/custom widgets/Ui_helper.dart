@@ -32,8 +32,8 @@ class UiHelper {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: SizedBox(
-        height: height * 0.07, // ~50 on standard phone
-        width: width * 0.8, // ~300 on standard phone
+        height: height * 0.07,
+        width: width * 0.8,
         child: ElevatedButton(
           onPressed: voidCallback,
           style: ElevatedButton.styleFrom(
@@ -43,7 +43,7 @@ class UiHelper {
             foregroundColor: Colors.white,
             backgroundColor: Colors.pinkAccent.shade200,
             textStyle: TextStyle(
-              fontSize: width * 0.06, // ~24–25 on normal phones
+              fontSize: width * 0.06,
               fontWeight: FontWeight.bold,
             ),
           ),
@@ -72,19 +72,27 @@ class UiHelper {
     );
   }
 
-  /// Custom Icon Button
-  static Widget customIconButton(VoidCallback voidCallback, Icon image) {
+  /// Custom Icon Button - FIXED VERSION
+  static Widget customIconButton(VoidCallback voidCallback, Widget image) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Container(
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: Colors.grey[200],
-          border: Border.all(color: Colors.pinkAccent),
-        ),
-        child: IconButton(
-          onPressed: voidCallback,
-          icon: image,
+      child: InkWell(
+        onTap: voidCallback,
+        child: Container(
+          height: 50,
+          width: 50,
+          decoration: BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.grey[200],
+            border: Border.all(color: Colors.pinkAccent, width: 2),
+          ),
+          child: Center(
+            child: SizedBox(
+              height: 24,
+              width: 24,
+              child: image,
+            ),
+          ),
         ),
       ),
     );

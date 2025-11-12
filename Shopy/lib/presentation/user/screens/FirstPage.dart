@@ -35,7 +35,7 @@ class _FirstpageState extends State<Firstpage> {
     double appBarFontSize = screenWidth * 0.06; // AppBar text size
     double appBarIconSize = screenWidth * 0.07; // AppBar icon size
     double horizontalPadding = screenWidth * 0.03; // padding
-    double bottomNavIconSize = screenWidth * 0.07; // BottomNavigationBar icon
+    double bottomNavIconSize = screenWidth * 0.05; // BottomNavigationBar icon
     double bottomNavFontSize = screenWidth * 0.04; // BottomNavigationBar text
 
     return Scaffold(

@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:shopy/core/app_constants.dart';
 import 'package:shopy/presentation/user/screens/onboarding/onboarding_screen.dart';
+i
 
 class SplashScreeen extends StatefulWidget {
   const SplashScreeen({super.key});
@@ -18,7 +19,7 @@ class _SplashScreeenState extends State<SplashScreeen> {
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const OnboardingScreen()),
+        MaterialPageRoute(builder: (context) => onboardingscreen()),
       );
     });
   }

@@ -39,29 +39,6 @@ class _FirstpageState extends State<Firstpage> {
     double bottomNavFontSize = screenWidth * 0.04; // BottomNavigationBar text
 
     return Scaffold(
-      appBar: AppBar(
-        backgroundColor: Colors.white,
-        elevation: 0,
-        centerTitle: true,
-        title: Text(
-          "Shopy",
-          style: TextStyle(
-            color: Colors.blueAccent,
-            fontSize: appBarFontSize,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          Padding(
-            padding: EdgeInsets.only(right: horizontalPadding),
-            child: Icon(
-              Icons.person,
-              color: Colors.grey,
-              size: appBarIconSize,
-            ),
-          ),
-        ],
-      ),
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
         child: _pages[_selectedIndex],

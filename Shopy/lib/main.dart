@@ -45,9 +45,14 @@
 
 import 'package:flutter/material.dart';
 import 'package:shopy/presentation/user/screens/FirstPage.dart';
+import 'package:provider/provider.dart';
+import 'package:shopy/provider/api_provider.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create:(_)=> ApiProvider()),],
+      child: const  MyApp()));
 }
 
 class MyApp extends StatelessWidget {

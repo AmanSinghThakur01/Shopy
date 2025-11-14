@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shopy/provider/api_provider.dart';
 import 'package:shopy/widgets/product_grid.dart';
 
 class Homescreen extends StatefulWidget {
@@ -11,10 +9,7 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
-  void initState (){
-    Provider.of<ApiProvider>(context ,listen: false).getData();
-        super.initState();
-  }
+
   final List<Map<String, String>> categories = [
     {"name": "Beauty", "image": "assets/beauty.jpg"},
     {"name": "Fashion", "image": "assets/fashion.jpg"},
@@ -25,7 +20,6 @@ class _HomescreenState extends State<Homescreen> {
 
   @override
   Widget build(BuildContext context) {
-    final products = Provider.of<ApiProvider>(context);
     final size = MediaQuery.of(context).size;
 
     return Scaffold(
@@ -73,7 +67,7 @@ class _HomescreenState extends State<Homescreen> {
                 ),
               ),
               SizedBox(height: size.height * 0.02),
-        
+
               // All Featured header
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -110,7 +104,7 @@ class _HomescreenState extends State<Homescreen> {
                 ],
               ),
               const SizedBox(height: 25),
-        
+
               // Categories horizontal list
               SizedBox(
                 height: size.height * 0.11,
@@ -147,7 +141,7 @@ class _HomescreenState extends State<Homescreen> {
                   },
                 ),
               ),
-        
+
               // Banner
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 16),
@@ -217,12 +211,9 @@ class _HomescreenState extends State<Homescreen> {
                   ],
                 ),
               ),
-        
+
               // Product Grid
-              ProductGrid(
-              ),
-
-
+              ProductGrid(),
             ],
           ),
         ),

@@ -1,10 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shopy/model/model.dart';
-import 'package:shopy/provider/api_provider.dart';
 
 class ProductDetailPage extends StatefulWidget {
-  final Model product;
+  final Map<String, dynamic> product; // ← Model हटाकर Map कर दिया
 
   const ProductDetailPage({super.key, required this.product});
 
@@ -14,11 +11,14 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
   int currentImageIndex = 0;
+  bool isInWishlist = false;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final api = Provider.of<ApiProvider>(context);
+
+    final List images = widget.product["images"] ??
+        [widget.product["image"]]; // single image fallback
 
     return Scaffold(
       backgroundColor: Colors.white,
@@ -33,29 +33,22 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               onPressed: () => Navigator.pop(context),
             ),
             actions: [
-              /// ❤️ FAVORITE USING PROVIDER
               IconButton(
                 icon: Icon(
-                  api.isInWatchlist(widget.product)
-                      ? Icons.favorite
-                      : Icons.favorite_border,
+                  isInWishlist ? Icons.favorite : Icons.favorite_border,
                   color: Colors.redAccent,
                 ),
                 onPressed: () {
-                  if (api.isInWatchlist(widget.product)) {
-                    api.removeFromWatchlist(widget.product);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Removed from Watchlist")),
-                    );
-                  } else {
-                    api.addToWatchlist(widget.product);
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text("Added to Watchlist")),
-                    );
-                  }
+                  setState(() => isInWishlist = !isInWishlist);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(isInWishlist
+                          ? "Added to Wishlist"
+                          : "Removed from Wishlist"),
+                    ),
+                  );
                 },
               ),
-
               IconButton(
                 icon: const Icon(Icons.share, color: Colors.black),
                 onPressed: () {},
@@ -65,16 +58,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               background: Stack(
                 children: [
                   PageView.builder(
-                    itemCount: widget.product.images?.length ?? 1,
-                    onPageChanged: (index) {
-                      setState(() {
-                        currentImageIndex = index;
-                      });
+                    itemCount: images.length,
+                    onPageChanged: (i) {
+                      setState(() => currentImageIndex = i);
                     },
                     itemBuilder: (context, index) {
                       return Image.network(
-                        widget.product.images?[index] ??
-                            "https://via.placeholder.com/400",
+                        images[index],
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return Container(
@@ -86,8 +76,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     },
                   ),
 
-                  if (widget.product.images != null &&
-                      widget.product.images!.length > 1)
+                  if (images.length > 1)
                     Positioned(
                       bottom: 16,
                       left: 0,
@@ -95,7 +84,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: List.generate(
-                          widget.product.images!.length,
+                          images.length,
                               (index) => Container(
                             margin: const EdgeInsets.symmetric(horizontal: 4),
                             width: currentImageIndex == index ? 24 : 8,
@@ -115,32 +104,17 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ),
           ),
 
+          // --- BODY CONTENT ---
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  if (widget.product.category != null)
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                      decoration: BoxDecoration(
-                        color: Colors.blue.shade50,
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      child: Text(
-                        widget.product.category!.name ?? "Category",
-                        style: TextStyle(
-                          color: Colors.blue.shade700,
-                          fontSize: 12,
-                          fontWeight: FontWeight.w600,
-                        ),
-                      ),
-                    ),
-                  const SizedBox(height: 12),
+                  // Category removed because Map me category nahi tha
 
                   Text(
-                    widget.product.title ?? "Product Name",
+                    widget.product["title"] ?? "Product Name",
                     style: const TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
@@ -153,8 +127,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     children: [
                       ...List.generate(
                         5,
-                            (index) => const Icon(Icons.star,
-                            color: Colors.amber, size: 20),
+                            (index) =>
+                        const Icon(Icons.star, color: Colors.amber, size: 20),
                       ),
                       const SizedBox(width: 8),
                       Text(
@@ -171,7 +145,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   Row(
                     children: [
                       Text(
-                        "₹${widget.product.price}",
+                        "₹${widget.product["price"]}",
                         style: const TextStyle(
                           fontSize: 32,
                           fontWeight: FontWeight.bold,
@@ -180,7 +154,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ),
                       const SizedBox(width: 12),
                       Text(
-                        "₹${(widget.product.price ?? 0) * 1.5}",
+                        "₹${(widget.product["price"] ?? 0) * 1.5}",
                         style: TextStyle(
                           fontSize: 18,
                           color: Colors.grey.shade500,
@@ -189,8 +163,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ),
                       const SizedBox(width: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
                           color: Colors.green.shade50,
                           borderRadius: BorderRadius.circular(4),
@@ -219,7 +193,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   const SizedBox(height: 8),
 
                   Text(
-                    widget.product.description ?? "No description available",
+                    widget.product["description"] ??
+                        "No description available",
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey.shade700,
@@ -290,7 +265,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               child: ElevatedButton(
                 onPressed: () {
                   ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Proceeding to checkout...")),
+                    const SnackBar(
+                        content: Text("Proceeding to checkout...")),
                   );
                 },
                 child: const Text("Buy Now"),

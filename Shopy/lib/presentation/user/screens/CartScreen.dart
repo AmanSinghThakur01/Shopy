@@ -27,11 +27,10 @@ class _CartscreenState extends State<Cartscreen> {
       body: SingleChildScrollView(
         child: Column(
           children: [
-Text("CartScareen")
+            Text("CartScareen")
           ],
         ),
       ),
     );
   }
 }
-

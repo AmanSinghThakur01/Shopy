@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:shopy/provider/api_provider.dart';
-import 'package:shopy/model/model.dart';
 import 'package:shopy/widgets/product_detail_page.dart';
 
 class Wishlistscreen extends StatefulWidget {
@@ -12,13 +9,29 @@ class Wishlistscreen extends StatefulWidget {
 }
 
 class _WishlistscreenState extends State<Wishlistscreen> {
+
+  // ------------------ LOCAL STATIC WATCHLIST ------------------
+  List<Map<String, dynamic>> watchlist = [
+    {
+      "id": 1,
+      "title": "Demo Product 1",
+      "price": 499,
+      "image": "https://via.placeholder.com/300",
+      "description": "Sample product description",
+    },
+    {
+      "id": 2,
+      "title": "Demo Product 2",
+      "price": 899,
+      "image": "https://via.placeholder.com/300",
+      "description": "Sample product description",
+    },
+  ];
+  // ------------------------------------------------------------
+
   @override
   Widget build(BuildContext context) {
-    final api = Provider.of<ApiProvider>(context);
-    final watchlist = api.watchlist;
-
-    final size = MediaQuery.of(context).size;
-    final width = size.width;
+    final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
       appBar: AppBar(
@@ -35,13 +48,11 @@ class _WishlistscreenState extends State<Wishlistscreen> {
           Padding(
             padding: EdgeInsets.only(right: 12.0),
             child: Icon(Icons.person, color: Colors.blueAccent),
-          ),
+          )
         ],
       ),
 
-      // -------------------------
-      // BODY
-      // -------------------------
+      // ----------------- CHECK EMPTY WISHLIST -----------------
       body: watchlist.isEmpty
           ? Center(
         child: Text(
@@ -53,6 +64,8 @@ class _WishlistscreenState extends State<Wishlistscreen> {
           ),
         ),
       )
+
+      // ----------------- GRID VIEW FOR WISHLIST -----------------
           : GridView.builder(
         padding: const EdgeInsets.all(12),
         gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
@@ -63,13 +76,16 @@ class _WishlistscreenState extends State<Wishlistscreen> {
         ),
         itemCount: watchlist.length,
         itemBuilder: (context, index) {
-          final Model product = watchlist[index];
+          final product = watchlist[index];
+
           return InkWell(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => ProductDetailPage(product: product),
+                  builder: (_) => ProductDetailPage(
+                    product: product, // Map pass ho raha hai
+                  ),
                 ),
               );
             },
@@ -82,13 +98,13 @@ class _WishlistscreenState extends State<Wishlistscreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-
-                  // PRODUCT IMAGE
+                  // IMAGE
                   Expanded(
                     child: ClipRRect(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius: const BorderRadius.vertical(
+                          top: Radius.circular(12)),
                       child: Image.network(
-                        product.images?[0] ?? "",
+                        product["image"] ?? "",
                         fit: BoxFit.cover,
                         width: double.infinity,
                       ),
@@ -101,7 +117,7 @@ class _WishlistscreenState extends State<Wishlistscreen> {
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 8),
                     child: Text(
-                      product.title ?? "",
+                      product["title"] ?? "",
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyle(
@@ -116,7 +132,7 @@ class _WishlistscreenState extends State<Wishlistscreen> {
                     padding: const EdgeInsets.symmetric(
                         horizontal: 8, vertical: 4),
                     child: Text(
-                      "₹ ${product.price}",
+                      "₹ ${product["price"]}",
                       style: TextStyle(
                         fontSize: width * 0.032,
                         color: Colors.green,
@@ -130,10 +146,14 @@ class _WishlistscreenState extends State<Wishlistscreen> {
                     child: IconButton(
                       icon: const Icon(Icons.delete, color: Colors.red),
                       onPressed: () {
-                        api.removeFromWatchlist(product);
+                        setState(() {
+                          watchlist.removeAt(index);
+                        });
+
                         ScaffoldMessenger.of(context).showSnackBar(
                           const SnackBar(
-                              content: Text("Removed from Wishlist")),
+                            content: Text("Removed from Wishlist"),
+                          ),
                         );
                       },
                     ),

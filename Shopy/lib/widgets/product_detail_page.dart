@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shopy/model/model.dart';
+import 'package:shopy/provider/api_provider.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final Model product;
@@ -12,17 +14,16 @@ class ProductDetailPage extends StatefulWidget {
 
 class _ProductDetailPageState extends State<ProductDetailPage> {
   int currentImageIndex = 0;
-  bool isFavorite = false;
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
+    final api = Provider.of<ApiProvider>(context);
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
-          // App Bar with back button
           SliverAppBar(
             expandedHeight: size.height * 0.4,
             pinned: true,
@@ -32,17 +33,29 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               onPressed: () => Navigator.pop(context),
             ),
             actions: [
+              /// ❤️ FAVORITE USING PROVIDER
               IconButton(
                 icon: Icon(
-                  isFavorite ? Icons.favorite : Icons.favorite_border,
+                  api.isInWatchlist(widget.product)
+                      ? Icons.favorite
+                      : Icons.favorite_border,
                   color: Colors.redAccent,
                 ),
                 onPressed: () {
-                  setState(() {
-                    isFavorite = !isFavorite;
-                  });
+                  if (api.isInWatchlist(widget.product)) {
+                    api.removeFromWatchlist(widget.product);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Removed from Watchlist")),
+                    );
+                  } else {
+                    api.addToWatchlist(widget.product);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(content: Text("Added to Watchlist")),
+                    );
+                  }
                 },
               ),
+
               IconButton(
                 icon: const Icon(Icons.share, color: Colors.black),
                 onPressed: () {},
@@ -51,7 +64,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             flexibleSpace: FlexibleSpaceBar(
               background: Stack(
                 children: [
-                  // Image Carousel
                   PageView.builder(
                     itemCount: widget.product.images?.length ?? 1,
                     onPageChanged: (index) {
@@ -61,7 +73,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     },
                     itemBuilder: (context, index) {
                       return Image.network(
-                        widget.product.images?[index] ?? "https://via.placeholder.com/400",
+                        widget.product.images?[index] ??
+                            "https://via.placeholder.com/400",
                         fit: BoxFit.cover,
                         errorBuilder: (context, error, stackTrace) {
                           return Container(
@@ -72,8 +85,9 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       );
                     },
                   ),
-                  // Image indicator dots
-                  if (widget.product.images != null && widget.product.images!.length > 1)
+
+                  if (widget.product.images != null &&
+                      widget.product.images!.length > 1)
                     Positioned(
                       bottom: 16,
                       left: 0,
@@ -101,14 +115,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
             ),
           ),
 
-          // Product Details
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Category Badge
                   if (widget.product.category != null)
                     Container(
                       padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
@@ -127,7 +139,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ),
                   const SizedBox(height: 12),
 
-                  // Product Title
                   Text(
                     widget.product.title ?? "Product Name",
                     style: const TextStyle(
@@ -138,14 +149,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                   const SizedBox(height: 8),
 
-                  // Rating (you can replace with actual rating if available)
                   Row(
                     children: [
-                      ...List.generate(5, (index) => const Icon(
-                        Icons.star,
-                        color: Colors.amber,
-                        size: 20,
-                      )),
+                      ...List.generate(
+                        5,
+                            (index) => const Icon(Icons.star,
+                            color: Colors.amber, size: 20),
+                      ),
                       const SizedBox(width: 8),
                       Text(
                         "4.5 (120 reviews)",
@@ -158,7 +168,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                   const SizedBox(height: 16),
 
-                  // Price
                   Row(
                     children: [
                       Text(
@@ -180,7 +189,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ),
                       const SizedBox(width: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
                           color: Colors.green.shade50,
                           borderRadius: BorderRadius.circular(4),
@@ -198,7 +208,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                   const SizedBox(height: 24),
 
-                  // Description Section
                   const Text(
                     "Description",
                     style: TextStyle(
@@ -208,6 +217,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ),
                   ),
                   const SizedBox(height: 8),
+
                   Text(
                     widget.product.description ?? "No description available",
                     style: TextStyle(
@@ -218,7 +228,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                   const SizedBox(height: 24),
 
-                  // Features
                   const Text(
                     "Features",
                     style: TextStyle(
@@ -228,12 +237,13 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ),
                   ),
                   const SizedBox(height: 12),
+
                   _buildFeatureItem(Icons.local_shipping, "Free Delivery"),
                   _buildFeatureItem(Icons.verified_user, "1 Year Warranty"),
                   _buildFeatureItem(Icons.currency_rupee, "Cash on Delivery"),
                   _buildFeatureItem(Icons.refresh, "7 Days Return Policy"),
 
-                  const SizedBox(height: 100), // Space for bottom buttons
+                  const SizedBox(height: 100),
                 ],
               ),
             ),
@@ -241,7 +251,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ],
       ),
 
-      // Bottom Action Buttons
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
@@ -256,7 +265,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ),
         child: Row(
           children: [
-            // Add to Cart Button
             Expanded(
               child: ElevatedButton.icon(
                 onPressed: () {
@@ -278,7 +286,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               ),
             ),
             const SizedBox(width: 12),
-            // Buy Now Button
             Expanded(
               child: ElevatedButton(
                 onPressed: () {

@@ -1,9 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:shopy/auth/loginpage.dart';
-
 import 'package:shopy/presentation/user/screens/FirstPage.dart';
-
 import '../custom widgets/Ui_helper.dart';
 
 class Signuppage extends StatefulWidget {
@@ -14,18 +12,24 @@ class Signuppage extends StatefulWidget {
 }
 
 class _SignuppageState extends State<Signuppage> {
+  final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
 
-  Future<void> signup(String email, String password) async {
-    if (email.isEmpty || password.isEmpty) {
+  Future<void> signup(String username, String email, String password) async {
+    if (username.isEmpty || email.isEmpty || password.isEmpty) {
       UiHelper.customAlertBox(context, "Enter Required Fields");
       return;
     }
 
     try {
-      await FirebaseAuth.instance
+      UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
+
+      // Set username in Firebase displayName
+      await userCredential.user?.updateDisplayName(username);
+      await userCredential.user?.reload();
+
       Navigator.pushReplacement(
         context,
         MaterialPageRoute(builder: (context) => const Firstpage()),
@@ -37,7 +41,6 @@ class _SignuppageState extends State<Signuppage> {
 
   @override
   Widget build(BuildContext context) {
-    // ✅ Responsive height/width (expert way)
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
@@ -59,27 +62,39 @@ class _SignuppageState extends State<Signuppage> {
               ),
               SizedBox(height: height * 0.03),
 
+              // Username Field
+              UiHelper.customTextField(
+                usernameController,
+                "Username",
+                Icons.person,
+                false,
+              ),
+              SizedBox(height: height * 0.02),
+
               // Email Field
               UiHelper.customTextField(
                 emailController,
-                "Username or Email",
-                Icons.person,
-                false,),
+                "Email",
+                Icons.email,
+                false,
+              ),
+              SizedBox(height: height * 0.02),
 
               // Password Field
-      UiHelper.customTextField(passwordController,
-        "Password",
-        Icons.lock,
-        true,),
-
+              UiHelper.customTextField(
+                passwordController,
+                "Password",
+                Icons.lock,
+                true,
+              ),
               SizedBox(height: height * 0.03),
 
-              // Create Account
-
+              // Create Account Button
               UiHelper.customElevatedButton(
                 context,
                     () {
                   signup(
+                    usernameController.text.trim(),
                     emailController.text.trim(),
                     passwordController.text.trim(),
                   );
@@ -96,7 +111,6 @@ class _SignuppageState extends State<Signuppage> {
                 ),
               ),
 
-
               SizedBox(height: height * 0.03),
 
               // Social login buttons
@@ -110,7 +124,7 @@ class _SignuppageState extends State<Signuppage> {
                   SizedBox(width: width * 0.04),
                   UiHelper.customIconButton(
                         () {},
-                    Image.asset('assets/apple_logo.png', width: 30) ,
+                    Image.asset('assets/apple_logo.png', width: 30),
                   ),
                   SizedBox(width: width * 0.04),
                   UiHelper.customIconButton(
@@ -130,8 +144,6 @@ class _SignuppageState extends State<Signuppage> {
                     "I Already Have an Account",
                     style: TextStyle(fontSize: width * 0.04),
                   ),
-
-
                   UiHelper.customTextButton(
                         () {
                       Navigator.pushReplacement(
@@ -156,6 +168,7 @@ class _SignuppageState extends State<Signuppage> {
 
   @override
   void dispose() {
+    usernameController.dispose();
     emailController.dispose();
     passwordController.dispose();
     super.dispose();

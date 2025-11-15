@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopy/widgets/app_drawer.dart';
 import 'package:shopy/widgets/product_grid.dart';
 
 class Homescreen extends StatefulWidget {
@@ -24,7 +25,7 @@ class _HomescreenState extends State<Homescreen> {
 
     return Scaffold(
       backgroundColor: Colors.white,
-      drawer: Drawer(),
+      drawer: AppDrawer(),
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,

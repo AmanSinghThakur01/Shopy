@@ -26,7 +26,7 @@ class _LoginpageState extends State<Loginpage> {
             .signInWithEmailAndPassword(email: email, password: password)
             .then(
               (value) {
-            return Navigator.push(
+            return Navigator.pushReplacement(
               context,
               MaterialPageRoute(builder: (context) => const Firstpage()),
             );

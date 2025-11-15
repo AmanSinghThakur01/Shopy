@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopy/widgets/app_appbar.dart';
 import 'package:shopy/widgets/product_detail_page.dart';
 
 class Wishlistscreen extends StatefulWidget {
@@ -34,23 +35,7 @@ class _WishlistscreenState extends State<Wishlistscreen> {
     final width = MediaQuery.of(context).size.width;
 
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Shopy",
-          style: TextStyle(
-            color: Colors.blueAccent,
-            fontSize: width * 0.055,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 12.0),
-            child: Icon(Icons.person, color: Colors.blueAccent),
-          )
-        ],
-      ),
+      appBar: AppAppbar(),
 
       // ----------------- CHECK EMPTY WISHLIST -----------------
       body: watchlist.isEmpty

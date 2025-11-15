@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopy/widgets/app_appbar.dart';
 class Cartscreen extends StatefulWidget {
   const Cartscreen({super.key});
 
@@ -10,20 +11,7 @@ class _CartscreenState extends State<Cartscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Shopy",
-          style: TextStyle(
-              color: Colors.blueAccent,
-              fontSize: 22
-              ,
-              fontWeight: FontWeight.bold),
-        ),
-        actions: const [
-          Icon(Icons.person),
-        ],
-      ),
+      appBar: AppAppbar(),
       body: SingleChildScrollView(
         child: Column(
           children: [

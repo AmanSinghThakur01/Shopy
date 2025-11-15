@@ -6,13 +6,23 @@ import 'package:shopy/presentation/user/screens/Setting_Screen.dart';
 import 'package:shopy/presentation/user/screens/WishlistScreen.dart';
 
 class Firstpage extends StatefulWidget {
-  const Firstpage({super.key});
+  final int index;
+
+  const Firstpage({super.key, this.index = 0});
 
   @override
   State<Firstpage> createState() => _FirstpageState();
 }
 
 class _FirstpageState extends State<Firstpage> {
+  late int _selectedIndex;
+
+  @override
+  void initState() {
+    _selectedIndex = widget.index;
+    super.initState();
+  }
+
   final List<Widget> _pages = [
     Homescreen(),
     Wishlistscreen(),
@@ -21,28 +31,26 @@ class _FirstpageState extends State<Firstpage> {
     SettingScreen(),
   ];
 
-  int _selectedIndex = 0;
-
   void setIndex(int index) {
     setState(() => _selectedIndex = index);
   }
 
   @override
   Widget build(BuildContext context) {
-    // Screen width se responsive sizes nikal rahe hain
     double screenWidth = MediaQuery.of(context).size.width;
 
-    double appBarFontSize = screenWidth * 0.06; // AppBar text size
-    double appBarIconSize = screenWidth * 0.07; // AppBar icon size
-    double horizontalPadding = screenWidth * 0.03; // padding
-    double bottomNavIconSize = screenWidth * 0.05; // BottomNavigationBar icon
-    double bottomNavFontSize = screenWidth * 0.04; // BottomNavigationBar text
+    double appBarFontSize = screenWidth * 0.06;
+    double appBarIconSize = screenWidth * 0.07;
+    double horizontalPadding = screenWidth * 0.03;
+    double bottomNavIconSize = screenWidth * 0.05;
+    double bottomNavFontSize = screenWidth * 0.04;
 
     return Scaffold(
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
         child: _pages[_selectedIndex],
       ),
+
       bottomNavigationBar: BottomNavigationBar(
         backgroundColor: Colors.white,
         selectedItemColor: Colors.red,

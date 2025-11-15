@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:shopy/widgets/app_appbar.dart';
 class Searchscreen extends StatefulWidget {
   const Searchscreen({super.key});
 
@@ -10,19 +11,7 @@ class _SearchscreenState extends State<Searchscreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        centerTitle: true,
-        title: Text(
-          "Shopy",
-          style: TextStyle(
-              color: Colors.blueAccent,
-              fontSize: 22,
-              fontWeight: FontWeight.bold),
-        ),
-        actions: const [
-          Icon(Icons.person),
-        ],
-      ),
+      appBar: AppAppbar(),
       body: Text("search Page"),
     );
   }

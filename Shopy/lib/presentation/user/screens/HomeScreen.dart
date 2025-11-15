@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:shopy/presentation/user/screens/profile_screen.dart';
+import 'package:shopy/widgets/app_appbar.dart';
 import 'package:shopy/widgets/app_drawer.dart';
 import 'package:shopy/widgets/product_grid.dart';
 
@@ -26,31 +28,10 @@ class _HomescreenState extends State<Homescreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       drawer: AppDrawer(),
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        centerTitle: true,
-        title: const Text(
-          "ShopY",
-          style: TextStyle(
-            fontSize: 22,
-            color: Colors.blue,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: const [
-          Padding(
-            padding: EdgeInsets.only(right: 8.0),
-            child: CircleAvatar(
-              backgroundImage: NetworkImage("https://via.placeholder.com/150"),
-              radius: 18,
-            ),
-          ),
-        ],
-      ),
+      appBar: AppAppbar(),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.all(12),
+          padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

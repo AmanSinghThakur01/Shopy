@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopy/widgets/app_appbar.dart';
+import 'package:shopy/widgets/product_grid.dart';
 class Searchscreen extends StatefulWidget {
   const Searchscreen({super.key});
 
@@ -19,11 +20,7 @@ class _SearchscreenState extends State<Searchscreen> {
             padding: const EdgeInsets.all(16.0),
             child: TextField(
               controller: _searchController,
-              onChanged: performSearch,
-              onSubmitted: (value) {
-                addToRecentSearch(value);
-                performSearch(value);
-              },
+
               decoration: InputDecoration(
                 hintText: "Search for products...",
                 prefixIcon: const Icon(Icons.search, color: Colors.grey),
@@ -32,7 +29,7 @@ class _SearchscreenState extends State<Searchscreen> {
                   icon: const Icon(Icons.clear, color: Colors.grey),
                   onPressed: () {
                     _searchController.clear();
-                    performSearch('');
+
                   },
                 )
                     : null,
@@ -50,6 +47,9 @@ class _SearchscreenState extends State<Searchscreen> {
               ),
             ),
           ),
+          Expanded(child: SingleChildScrollView(
+            child: ProductGrid(),
+          ))
         ],
       )),
     );

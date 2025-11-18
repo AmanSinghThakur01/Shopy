@@ -1,108 +1,118 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
-import 'package:shopy/core/app_constants.dart';
 import 'package:shopy/presentation/user/screens/onboarding/onboarding_screen.dart';
 
-
-class SplashScreeen extends StatefulWidget {
-  const SplashScreeen({super.key});
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
 
   @override
-  State<SplashScreeen> createState() => _SplashScreeenState();
+  State<SplashScreen> createState() => _SplashScreenState();
 }
 
-class _SplashScreeenState extends State<SplashScreeen> {
+class _SplashScreenState extends State<SplashScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  late Animation<double> _fadeAnimation;
+
   @override
   void initState() {
     super.initState();
-    // Splash screen after 3 sec navigate to onboarding page
+
+    // Fade animation
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 1),
+    );
+
+    _fadeAnimation = Tween<double>(begin: 0, end: 1).animate(
+      CurvedAnimation(parent: _controller, curve: Curves.easeOut),
+    );
+
+    _controller.forward();
+
+    // Navigate
     Timer(const Duration(seconds: 3), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => OnboardingScreen()),
+        MaterialPageRoute(builder: (_) => OnboardingScreen()),
       );
     });
   }
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final width = size.width;
-    final height = size.height;
 
     return Scaffold(
-      body: Container(
-        height: height,
-        width: width,
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [
-              Color(0xFFF48FB1),
-              Color(0xFFCE93D8),
-            ],
-            begin: Alignment.topCenter,
-            end: Alignment.bottomCenter,
-          ),
-        ),
+      backgroundColor: Colors.white,
+      body: FadeTransition(
+        opacity: _fadeAnimation,
         child: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              // Logo container with shadow
+              /// Logo Card (Premium look)
               Container(
-                height: height * 0.30,
-                width: height * 0.30,
+                height: size.width * 0.42,
+                width: size.width * 0.42,
                 decoration: BoxDecoration(
-                  shape: BoxShape.circle,
+                  borderRadius: BorderRadius.circular(25),
                   color: Colors.white,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.15),
+                      color: Colors.black.withOpacity(0.10),
                       blurRadius: 30,
-                      offset: const Offset(0, 10),
+                      offset: const Offset(0, 12),
                     ),
                   ],
                 ),
                 child: Icon(
                   Icons.shopping_bag_rounded,
-                  color: const Color(0xFFF06292),
-                  size: height * 0.18,
+                  color: Colors.pinkAccent,
+                  size: size.width * 0.26,
                 ),
               ),
 
-              SizedBox(height: height * 0.05),
+              SizedBox(height: size.height * 0.04),
 
-              // App name
+              /// App Name
               Text(
                 "SHOPY",
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: width * 0.12,
-                  fontWeight: FontWeight.bold,
+                  fontSize: size.width * 0.125,
+                  fontWeight: FontWeight.w700,
+                  color: Colors.black87,
                   letterSpacing: 2,
                 ),
               ),
 
-              SizedBox(height: height * 0.01),
+              SizedBox(height: size.height * 0.005),
 
-              // Tagline
+              /// Tagline
               Text(
-                "S H O P  W I T H  S T Y L E",
+                "Shop • Discover • Enjoy",
                 style: TextStyle(
-                  color: Colors.white,
-                  fontSize: width * 0.045,
-                  letterSpacing: 2,
+                  fontSize: size.width * 0.045,
+                  color: Colors.black54,
+                  fontWeight: FontWeight.w500,
+                  letterSpacing: 1,
                 ),
               ),
 
-              SizedBox(height: height * 0.08),
+              SizedBox(height: size.height * 0.10),
 
-              // Developer credit
+              /// Developer Name
               Text(
                 "Developed by : Aman Singh Thakur",
                 style: TextStyle(
-                  color: Colors.white.withOpacity(0.8),
-                  fontSize: width * 0.035,
+                  color: Colors.black45,
+                  fontSize: size.width * 0.035,
                 ),
               ),
             ],

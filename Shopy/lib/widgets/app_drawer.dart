@@ -3,6 +3,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shopy/auth/loginpage.dart';
 import 'package:shopy/presentation/user/screens/FirstPage.dart';
 
+import 'logout_dialog.dart';
+
 class AppDrawer extends StatelessWidget {
   const AppDrawer({super.key});
 
@@ -82,16 +84,9 @@ class AppDrawer extends StatelessWidget {
           ),
 
           ListTile(
-            leading: Icon(Icons.search, color: Colors.pink.shade300),
-            title: const Text("Search"),
-            onTap: () => navigateTo(3),
-          ),
-
-
-          ListTile(
             leading: Icon(Icons.settings, color: Colors.pink),
             title: const Text("Settings"),
-            onTap: () => navigateTo(4),
+            onTap: () => navigateTo(3),
           ),
 
           const Divider(),
@@ -125,16 +120,7 @@ class AppDrawer extends StatelessWidget {
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.red.shade300,
                       ),
-                      onPressed: () async {
-                        Navigator.pop(context);
-                        await FirebaseAuth.instance.signOut();
-                        Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (_) => const Loginpage(),
-                          ),
-                              (route) => false,
-                        );
+                      onPressed: () {LogoutDialog.show(context);
                       },
                       child: const Text("Logout",style: TextStyle( color: Colors.white),),
                     ),

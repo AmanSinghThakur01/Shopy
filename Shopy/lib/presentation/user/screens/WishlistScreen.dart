@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:shopy/widgets/app_appbar.dart';
-import 'package:shopy/widgets/product_detail_page.dart';
+import '../../../services/wishlish_manager.dart';
+import '../../../widgets/product_detail_page.dart';
+
 
 class Wishlistscreen extends StatefulWidget {
   const Wishlistscreen({super.key});
@@ -10,137 +11,127 @@ class Wishlistscreen extends StatefulWidget {
 }
 
 class _WishlistscreenState extends State<Wishlistscreen> {
-
-  // ------------------ LOCAL STATIC WATCHLIST ------------------
-  List<Map<String, dynamic>> watchlist = [
-    {
-      "id": 1,
-      "title": "Demo Product 1",
-      "price": 499,
-      "image": "https://via.placeholder.com/300",
-      "description": "Sample product description",
-    },
-    {
-      "id": 2,
-      "title": "Demo Product 2",
-      "price": 899,
-      "image": "https://via.placeholder.com/300",
-      "description": "Sample product description",
-    },
-  ];
-  // ------------------------------------------------------------
-
   @override
   Widget build(BuildContext context) {
-    final width = MediaQuery.of(context).size.width;
+    final watchlist = WishlistManager.wishlist;
 
     return Scaffold(
-      appBar: AppAppbar(),
+      appBar: AppBar(
+        backgroundColor: Colors.pink.shade50,
+        title: const Text("Wishlist" ,style: TextStyle(fontWeight: FontWeight.bold,color: Colors.pink),),
+        centerTitle: true,
+      ),
 
-      // ----------------- CHECK EMPTY WISHLIST -----------------
       body: watchlist.isEmpty
-          ? Center(
+          ? const Center(
         child: Text(
-          "Your Wishlist is Empty",
-          style: TextStyle(
-            fontSize: width * 0.05,
-            fontWeight: FontWeight.w500,
-            color: Colors.black54,
-          ),
+          "Your wishlist is empty",
+          style: TextStyle(fontSize: 16),
         ),
       )
-
-      // ----------------- GRID VIEW FOR WISHLIST -----------------
           : GridView.builder(
         padding: const EdgeInsets.all(12),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: width < 600 ? 2 : 3,
-          crossAxisSpacing: 12,
-          mainAxisSpacing: 12,
-          childAspectRatio: 0.65,
-        ),
         itemCount: watchlist.length,
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2, // 2 products per row
+          mainAxisSpacing: 12,
+          crossAxisSpacing: 12,
+          childAspectRatio: 0.7, // card shape ratio
+        ),
         itemBuilder: (context, index) {
           final product = watchlist[index];
+          final List images = product["images"] ?? [];
 
-          return InkWell(
+          return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (_) => ProductDetailPage(
-                    product: product, // Map pass ho raha hai
-                  ),
+                  builder: (_) => ProductDetailPage(product: product),
                 ),
               );
             },
+
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(12),
                 color: Colors.white,
-                border: Border.all(color: Colors.black12),
+                borderRadius: BorderRadius.circular(12),
+                boxShadow: const [
+                  BoxShadow(
+                    color: Colors.black12,
+                    blurRadius: 4,
+                    offset: Offset(2, 2),
+                  ),
+                ],
               ),
+
               child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // IMAGE
-                  Expanded(
-                    child: ClipRRect(
-                      borderRadius: const BorderRadius.vertical(
-                          top: Radius.circular(12)),
-                      child: Image.network(
-                        product["image"] ?? "",
-                        fit: BoxFit.cover,
-                        width: double.infinity,
-                      ),
+                  // -------------------------------- IMAGE --------------------------------
+                  ClipRRect(
+                    borderRadius: const BorderRadius.only(
+                      topLeft: Radius.circular(12),
+                      topRight: Radius.circular(12),
+                    ),
+                    child: Image.network(
+                      images.isNotEmpty ? images[0] : "",
+                      height: 140,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
                     ),
                   ),
 
-                  const SizedBox(height: 8),
-
-                  // TITLE
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 8),
-                    child: Text(
-                      product["title"] ?? "",
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      style: TextStyle(
-                        fontSize: width * 0.035,
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-
-                  // PRICE
-                  Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 8, vertical: 4),
-                    child: Text(
-                      "₹ ${product["price"]}",
-                      style: TextStyle(
-                        fontSize: width * 0.032,
-                        color: Colors.green,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-
-                  // REMOVE BUTTON
-                  Center(
-                    child: IconButton(
-                      icon: const Icon(Icons.delete, color: Colors.red),
-                      onPressed: () {
-                        setState(() {
-                          watchlist.removeAt(index);
-                        });
-
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text("Removed from Wishlist"),
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // ------------------------------- TITLE -------------------------------
+                        Text(
+                          product["title"] ?? "Product",
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                          style: const TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
                           ),
-                        );
-                      },
+                        ),
+                        const SizedBox(height: 6),
+
+                        // ------------------------------- PRICE -------------------------------
+                        Text(
+                          "₹${product["price"]}",
+                          style: const TextStyle(
+                            fontSize: 15,
+                            color: Colors.redAccent,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+
+                        const SizedBox(height: 10),
+
+                        // ------------------------------- DELETE BUTTON -------------------------------
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: IconButton(
+                            icon: const Icon(Icons.delete,
+                                color: Colors.red),
+                            onPressed: () {
+                              setState(() {
+                                WishlistManager.removeFromWishlist(
+                                    product["title"]);
+                              });
+
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                  content:
+                                  Text("Removed from Wishlist"),
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ],
                     ),
                   ),
                 ],

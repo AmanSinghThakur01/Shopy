@@ -1,45 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:shopy/widgets/product_detail_page.dart';
 
-// Dummy static products (API हटाया गया)
-class DummyProduct {
-  final String title;
-  final String image;
-  final int price;
+import '../model.dart';
+import '../services/api/Api.dart';
 
-  DummyProduct({required this.title, required this.image, required this.price});
+class ProductGrid extends StatefulWidget {
+  const ProductGrid({super.key});
+
+  @override
+  State<ProductGrid> createState() => _ProductGridState();
 }
 
-class ProductGrid extends StatelessWidget {
-  ProductGrid({super.key});
+class _ProductGridState extends State<ProductGrid> {
+  List<ProductModel> products = [];
+  final ApiService api = ApiService();
 
-  // ------ STATIC PRODUCTS ------
-  final List<DummyProduct> products = [
-    DummyProduct(
-      title: "Product 1",
-      image: "https://placehold.co/300",
-      price: 499,
-    ),
-    DummyProduct(
-      title: "Product 2",
-      image: "https://placehold.co/300",
-      price: 699,
-    ),
-    DummyProduct(
-      title: "Product 3",
-      image: "https://placehold.co/300",
-      price: 899,
-    ),
-    DummyProduct(
-      title: "Product 4",
-      image: "https://placehold.co/300",
-      price: 299,
-    ),
-  ];
+  @override
+  void initState() {
+    super.initState();
+    loadProducts();
+  }
+
+  loadProducts() async {
+    products = await api.fetchProducts();
+    setState(() {});
+  }
 
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
+    return products.isEmpty
+        ? const Center(child: CircularProgressIndicator())
+        : GridView.builder(
       shrinkWrap: true,
       padding: const EdgeInsets.all(8),
       physics: const NeverScrollableScrollPhysics(),
@@ -62,15 +53,13 @@ class ProductGrid extends StatelessWidget {
                   product: {
                     "title": product.title,
                     "price": product.price,
-                    "description": "Sample description here...",
-                    "image": product.image,   // single image
-                    "images": [product.image] // multiple images fallback
+                    "description": product.description,
+                    "images": product.images, // full list
                   },
                 ),
               ),
             );
-          }
-,
+          },
           child: Container(
             decoration: BoxDecoration(
               color: Colors.white,
@@ -86,7 +75,7 @@ class ProductGrid extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Product Image
+                // Product Image (fixed)
                 Expanded(
                   flex: 3,
                   child: ClipRRect(
@@ -94,14 +83,16 @@ class ProductGrid extends StatelessWidget {
                       top: Radius.circular(12),
                     ),
                     child: Image.network(
-                      product.image,
+                      product.images.isNotEmpty
+                          ? product.images[0]
+                          : 'https://via.placeholder.com/150',
                       fit: BoxFit.cover,
                       width: double.infinity,
                     ),
                   ),
                 ),
 
-                // Product Details
+                // Product Text
                 Expanded(
                   flex: 1,
                   child: Padding(

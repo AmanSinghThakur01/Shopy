@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shopy/presentation/user/screens/CartScreen.dart';
 import 'package:shopy/presentation/user/screens/HomeScreen.dart';
-import 'package:shopy/presentation/user/screens/SearchScreen.dart';
 import 'package:shopy/presentation/user/screens/Setting_Screen.dart';
 import 'package:shopy/presentation/user/screens/WishlistScreen.dart';
 
@@ -19,15 +18,14 @@ class _FirstpageState extends State<Firstpage> {
 
   @override
   void initState() {
-    _selectedIndex = widget.index;
     super.initState();
+    _selectedIndex = widget.index;
   }
 
-  final List<Widget> _pages = [
+  final List<Widget> _pages = const [
     Homescreen(),
     Wishlistscreen(),
     Cartscreen(),
-    Searchscreen(),
     SettingScreen(),
   ];
 
@@ -37,17 +35,15 @@ class _FirstpageState extends State<Firstpage> {
 
   @override
   Widget build(BuildContext context) {
-    double screenWidth = MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width;
 
-    double appBarFontSize = screenWidth * 0.06;
-    double appBarIconSize = screenWidth * 0.07;
-    double horizontalPadding = screenWidth * 0.03;
-    double bottomNavIconSize = screenWidth * 0.05;
-    double bottomNavFontSize = screenWidth * 0.04;
+    final padding = width * 0.03;
+    final iconSize = width * 0.065;
+    final labelSize = width * 0.035;
 
     return Scaffold(
       body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: horizontalPadding),
+        padding: EdgeInsets.symmetric(horizontal: padding),
         child: _pages[_selectedIndex],
       ),
 
@@ -58,15 +54,20 @@ class _FirstpageState extends State<Firstpage> {
         type: BottomNavigationBarType.fixed,
         currentIndex: _selectedIndex,
         onTap: setIndex,
-        iconSize: bottomNavIconSize,
-        selectedFontSize: bottomNavFontSize,
-        unselectedFontSize: bottomNavFontSize,
+
+        iconSize: iconSize,
+        selectedFontSize: labelSize,
+        unselectedFontSize: labelSize,
+
         items: const [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
-          BottomNavigationBarItem(icon: Icon(Icons.favorite_border), label: 'Wishlist'),
-          BottomNavigationBarItem(icon: Icon(Icons.shopping_cart), label: 'Cart'),
-          BottomNavigationBarItem(icon: Icon(Icons.search), label: 'Search'),
-          BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Settings'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.favorite_border), label: 'Wishlist'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.shopping_cart), label: 'Cart'),
+          BottomNavigationBarItem(
+              icon: Icon(Icons.settings), label: 'Settings'),
         ],
       ),
     );

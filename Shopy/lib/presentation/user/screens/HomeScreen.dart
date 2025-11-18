@@ -12,14 +12,22 @@ class Homescreen extends StatefulWidget {
 }
 
 class _HomescreenState extends State<Homescreen> {
+  final TextEditingController searchController = TextEditingController();
+  String searchQuery = '';
 
   final List<Map<String, String>> categories = [
     {"name": "Beauty", "image": "assets/beauty.jpg"},
     {"name": "Fashion", "image": "assets/fashion.jpg"},
     {"name": "Kids", "image": "assets/kids.jpg"},
     {"name": "Mens", "image": "assets/man.jpg"},
-    {"name": "Womens", "image": "assets/women.jpg"},
+    {"name": "Womens", "image": "assets/womens.jpg"},
   ];
+
+  @override
+  void dispose() {
+    searchController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -31,15 +39,32 @@ class _HomescreenState extends State<Homescreen> {
       appBar: AppAppbar(),
       body: SafeArea(
         child: SingleChildScrollView(
-          padding: const EdgeInsets.symmetric(vertical: 20,horizontal: 2),
+          padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 2),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Search
               TextField(
+                controller: searchController,
+                onSubmitted: (value) {
+                  setState(() {
+                    searchQuery = value;
+                  });
+                },
                 decoration: InputDecoration(
                   hintText: " Search any Product.....",
                   prefixIcon: Icon(Icons.search),
+                  suffixIcon: searchController.text.isNotEmpty
+                      ? IconButton(
+                    icon: Icon(Icons.clear),
+                    onPressed: () {
+                      searchController.clear();
+                      setState(() {
+                        searchQuery = '';
+                      });
+                    },
+                  )
+                      : null,
                   filled: true,
                   fillColor: Colors.grey.shade100,
                   contentPadding: const EdgeInsets.symmetric(vertical: 0),
@@ -47,6 +72,9 @@ class _HomescreenState extends State<Homescreen> {
                     borderRadius: BorderRadius.circular(12),
                   ),
                 ),
+                onChanged: (value) {
+                  setState(() {}); // To show/hide clear button
+                },
               ),
               SizedBox(height: size.height * 0.02),
 
@@ -193,8 +221,6 @@ class _HomescreenState extends State<Homescreen> {
                   ],
                 ),
               ),
-
-              // Product Grid
               ProductGrid(),
             ],
           ),

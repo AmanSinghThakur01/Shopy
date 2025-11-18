@@ -1,22 +1,21 @@
-import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+import '../../model.dart';
+
 
 class ApiService {
-  static const String baseUrl = "https://dummyjson.com";
+  static const String baseUrl = "https://api.escuelajs.co/api/v1/products";
 
-  // GET PRODUCTS
-  Future<List<dynamic>> fetchProducts() async {
-    final url = Uri.parse("$baseUrl/products");
-
-    final response = await http.get(url);
+  Future<List<ProductModel>> fetchProducts() async {
+    final response = await http.get(Uri.parse(baseUrl));
 
     if (response.statusCode == 200) {
-      final body = jsonDecode(response.body);
-      return body["products"]; // returning List
+      final List data = jsonDecode(response.body);
+      return data.map((json) => ProductModel.fromJson(json)).toList();
     } else {
       throw Exception("Failed to load products");
     }
   }
 }
+

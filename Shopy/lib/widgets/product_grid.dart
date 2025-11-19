@@ -54,7 +54,7 @@ class _ProductGridState extends State<ProductGrid> {
                     "title": product.title,
                     "price": product.price,
                     "description": product.description,
-                    "images": product.images, // full list
+                    "images": product.images,
                   },
                 ),
               ),
@@ -75,7 +75,6 @@ class _ProductGridState extends State<ProductGrid> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                // Product Image (fixed)
                 Expanded(
                   flex: 3,
                   child: ClipRRect(

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shopy/widgets/logout_dialog.dart';   // <-- IMPORT HERE
+import 'package:shopy/widgets/logout_dialog.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -32,7 +32,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         padding: const EdgeInsets.all(20),
         child: Column(
           children: [
-            // ------------------- Profile Image -------------------
             CircleAvatar(
               radius: 55,
               backgroundColor: Colors.blue.shade200,
@@ -46,7 +45,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             const SizedBox(height: 15),
 
-            // ------------------- User Name -------------------
             Text(
               user!.displayName ?? "User",
               style: const TextStyle(
@@ -57,7 +55,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             const SizedBox(height: 6),
 
-            // ------------------- User Email -------------------
             Text(
               user!.email ?? "",
               style: const TextStyle(fontSize: 16, color: Colors.grey),
@@ -65,7 +62,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
             const SizedBox(height: 30),
 
-            // ------------------- Information Cards -------------------
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 14),
               decoration: BoxDecoration(

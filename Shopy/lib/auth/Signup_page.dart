@@ -26,7 +26,6 @@ class _SignuppageState extends State<Signuppage> {
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
 
-      // Set username in Firebase displayName
       await userCredential.user?.updateDisplayName(username);
       await userCredential.user?.reload();
 
@@ -62,7 +61,6 @@ class _SignuppageState extends State<Signuppage> {
               ),
               SizedBox(height: height * 0.03),
 
-              // Username Field
               UiHelper.customTextField(
                 usernameController,
                 "Username",
@@ -71,7 +69,6 @@ class _SignuppageState extends State<Signuppage> {
               ),
               SizedBox(height: height * 0.02),
 
-              // Email Field
               UiHelper.customTextField(
                 emailController,
                 "Email",
@@ -80,7 +77,6 @@ class _SignuppageState extends State<Signuppage> {
               ),
               SizedBox(height: height * 0.02),
 
-              // Password Field
               UiHelper.customTextField(
                 passwordController,
                 "Password",
@@ -89,7 +85,6 @@ class _SignuppageState extends State<Signuppage> {
               ),
               SizedBox(height: height * 0.03),
 
-              // Create Account Button
               UiHelper.customElevatedButton(
                 context,
                     () {
@@ -112,8 +107,6 @@ class _SignuppageState extends State<Signuppage> {
               ),
 
               SizedBox(height: height * 0.03),
-
-              // Social login buttons
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -136,7 +129,6 @@ class _SignuppageState extends State<Signuppage> {
 
               SizedBox(height: height * 0.04),
 
-              // Already have account
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [

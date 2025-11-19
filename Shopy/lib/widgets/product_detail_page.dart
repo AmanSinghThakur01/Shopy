@@ -1,4 +1,3 @@
-// widgets/product_detail_page.dart
 import 'package:flutter/material.dart';
 import 'package:shopy/presentation/user/screens/CartScreen.dart';
 import 'package:shopy/services/wishlish_manager.dart';
@@ -27,13 +26,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
     final int ratingCount = widget.product["ratingCount"] ?? 0;
     final String category = widget.product["category"] ?? "Unknown";
     final double price = (widget.product["price"] ?? 0.0);
-    final double priceInINR = price * 83; // USD to INR
+    final double priceInINR = price * 83;
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
-          // SliverAppBar with images
           SliverAppBar(
             expandedHeight: size.height * 0.4,
             pinned: true,
@@ -223,8 +221,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ),
                   ),
                   const SizedBox(height: 12),
-
-                  // Product Title
                   Text(
                     widget.product["title"] ?? "Product Name",
                     style: const TextStyle(
@@ -235,8 +231,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ),
                   ),
                   const SizedBox(height: 12),
-
-                  // Rating Row
                   Row(
                     children: [
                       ...List.generate(5, (index) {
@@ -260,8 +254,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ],
                   ),
                   const SizedBox(height: 20),
-
-                  // Price Section
                   Row(
                     children: [
                       Text(

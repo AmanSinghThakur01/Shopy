@@ -1,5 +1,3 @@
-// product_model.dart
-
 class ProductModel {
   final int id;
   final String title;
@@ -23,7 +21,6 @@ class ProductModel {
     required this.updatedAt,
   });
 
-  // Helper getter for first image
   String get primaryImage => images.isNotEmpty ? images.first : '';
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -54,7 +51,6 @@ class ProductModel {
     };
   }
 
-  // Optional: Copy with method for immutability
   ProductModel copyWith({
     int? id,
     String? title,

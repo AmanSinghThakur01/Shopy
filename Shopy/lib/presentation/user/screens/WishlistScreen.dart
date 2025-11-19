@@ -33,10 +33,10 @@ class _WishlistscreenState extends State<Wishlistscreen> {
         padding: const EdgeInsets.all(12),
         itemCount: watchlist.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // 2 products per row
+          crossAxisCount: 2,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
-          childAspectRatio: 0.7, // card shape ratio
+          childAspectRatio: 0.7,
         ),
         itemBuilder: (context, index) {
           final product = watchlist[index];
@@ -107,8 +107,6 @@ class _WishlistscreenState extends State<Wishlistscreen> {
                         ),
 
                         const SizedBox(height: 10),
-
-                        // ------------------------------- DELETE BUTTON -------------------------------
                         Align(
                           alignment: Alignment.centerRight,
                           child: IconButton(

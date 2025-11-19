@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:shopy/auth/loginpage.dart';
 import 'package:shopy/presentation/user/screens/FirstPage.dart';
 
 import 'logout_dialog.dart';

@@ -20,7 +20,7 @@ class _HomescreenState extends State<Homescreen> {
     {"name": "Fashion", "image": "assets/fashion.jpg"},
     {"name": "Kids", "image": "assets/kids.jpg"},
     {"name": "Mens", "image": "assets/man.jpg"},
-    {"name": "Womens", "image": "assets/womens.jpg"},
+    {"name": "Womens", "image": "assets/women.jpg"},
   ];
 
   @override
@@ -43,7 +43,6 @@ class _HomescreenState extends State<Homescreen> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Search
               TextField(
                 controller: searchController,
                 onSubmitted: (value) {
@@ -73,13 +72,11 @@ class _HomescreenState extends State<Homescreen> {
                   ),
                 ),
                 onChanged: (value) {
-                  setState(() {}); // To show/hide clear button
+                  setState(() {});
                 },
               ),
               SizedBox(height: size.height * 0.02),
-
-              // All Featured header
-              Row(
+                Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   const Text(
@@ -114,8 +111,6 @@ class _HomescreenState extends State<Homescreen> {
                 ],
               ),
               const SizedBox(height: 25),
-
-              // Categories horizontal list
               SizedBox(
                 height: size.height * 0.11,
                 child: ListView.builder(
@@ -152,7 +147,6 @@ class _HomescreenState extends State<Homescreen> {
                 ),
               ),
 
-              // Banner
               Container(
                 margin: const EdgeInsets.symmetric(vertical: 16),
                 height: 160,

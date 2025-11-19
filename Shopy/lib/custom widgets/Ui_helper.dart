@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class UiHelper {
-  /// Custom Text Field
+
   static Widget customTextField(
       TextEditingController controller, String text, IconData iconData, bool toHide) {
     return Padding(
@@ -21,8 +21,6 @@ class UiHelper {
       ),
     );
   }
-
-  /// Custom Elevated Button
   static Widget customElevatedButton(
       BuildContext context, VoidCallback voidCallback, String text) {
     final size = MediaQuery.of(context).size;
@@ -53,7 +51,6 @@ class UiHelper {
     );
   }
 
-  /// Custom Text Button
   static Widget customTextButton(
       VoidCallback voidCallback, String text, double fontSize, bool underline) {
     return TextButton(
@@ -72,7 +69,6 @@ class UiHelper {
     );
   }
 
-  /// Custom Icon Button - FIXED VERSION
   static Widget customIconButton(VoidCallback voidCallback, Widget image) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
@@ -98,7 +94,6 @@ class UiHelper {
     );
   }
 
-  /// Custom Alert Box
   static Future<void> customAlertBox(BuildContext context, String text) {
     return showDialog(
       context: context,

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../../services/wishlish_manager.dart';
 import '../../../widgets/product_detail_page.dart';
 
 
@@ -33,10 +32,10 @@ class _WishlistscreenState extends State<Cartscreen> {
         padding: const EdgeInsets.all(12),
         itemCount: Cartlist.length,
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-          crossAxisCount: 2, // 2 products per row
+          crossAxisCount: 2,
           mainAxisSpacing: 12,
           crossAxisSpacing: 12,
-          childAspectRatio: 0.7, // card shape ratio
+          childAspectRatio: 0.7,
         ),
         itemBuilder: (context, index) {
           final product = Cartlist[index];
@@ -108,7 +107,6 @@ class _WishlistscreenState extends State<Cartscreen> {
 
                         const SizedBox(height: 10),
 
-                        // ------------------------------- DELETE BUTTON -------------------------------
                         Align(
                           alignment: Alignment.centerRight,
                           child: IconButton(

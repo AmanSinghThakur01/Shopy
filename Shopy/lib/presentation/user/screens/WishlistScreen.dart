@@ -67,7 +67,7 @@ class _WishlistscreenState extends State<Wishlistscreen> {
 
               child: Column(
                 children: [
-                  // -------------------------------- IMAGE --------------------------------
+
                   ClipRRect(
                     borderRadius: const BorderRadius.only(
                       topLeft: Radius.circular(12),
@@ -86,7 +86,6 @@ class _WishlistscreenState extends State<Wishlistscreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        // ------------------------------- TITLE -------------------------------
                         Text(
                           product["title"] ?? "Product",
                           maxLines: 1,
@@ -98,7 +97,6 @@ class _WishlistscreenState extends State<Wishlistscreen> {
                         ),
                         const SizedBox(height: 6),
 
-                        // ------------------------------- PRICE -------------------------------
                         Text(
                           "₹${product["price"]}",
                           style: const TextStyle(

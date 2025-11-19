@@ -2,7 +2,6 @@ class WishlistManager {
   static List<Map<String, dynamic>> wishlist = [];
 
   static void addToWishlist(Map<String, dynamic> product) {
-    // Prevent duplicate entries
     bool exists = wishlist.any((item) => item["title"] == product["title"]);
 
     if (!exists) {

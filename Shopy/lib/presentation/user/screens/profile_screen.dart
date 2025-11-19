@@ -15,12 +15,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.grey.shade100,
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        backgroundColor: Colors.pink.shade50,
         elevation: 0,
         title: const Text(
           "My Profile",
-          style: TextStyle(fontWeight: FontWeight.w600),
+          style: TextStyle(fontWeight: FontWeight.w600 , color: Colors.pink),
         ),
         centerTitle: true,
       ),
@@ -95,7 +96,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               child: ElevatedButton(
                 style: ElevatedButton.styleFrom(
                   padding: const EdgeInsets.symmetric(vertical: 15),
-                  backgroundColor: Colors.redAccent,
+                  backgroundColor: Colors.pinkAccent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(12),
                   ),

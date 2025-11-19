@@ -1,8 +1,10 @@
 // widgets/product_detail_page.dart
-// Product Detail Page with Real API Data
-
 import 'package:flutter/material.dart';
+import 'package:shopy/presentation/user/screens/CartScreen.dart';
 import 'package:shopy/services/wishlish_manager.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+
+import '../services/buynow_screen.dart';
 
 class ProductDetailPage extends StatefulWidget {
   final Map<String, dynamic> product;
@@ -20,22 +22,18 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-
-    // FIXED — your API provides LIST of images
     final List images = widget.product["images"] ?? [];
-    final String imageUrl = images.isNotEmpty ? images[0] : "";
-
     final double rating = widget.product["rating"] ?? 0.0;
     final int ratingCount = widget.product["ratingCount"] ?? 0;
     final String category = widget.product["category"] ?? "Unknown";
     final double price = (widget.product["price"] ?? 0.0);
-    final double priceInINR = price * 83; // USD to INR conversion
+    final double priceInINR = price * 83; // USD to INR
 
     return Scaffold(
       backgroundColor: Colors.white,
       body: CustomScrollView(
         slivers: [
-          // AppBar with Image
+          // SliverAppBar with images
           SliverAppBar(
             expandedHeight: size.height * 0.4,
             pinned: true,
@@ -51,31 +49,96 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   color: Colors.redAccent,
                 ),
                 onPressed: () {
-                 setState(()=> isInWishlist = !isInWishlist);
-                 
-                 if (isInWishlist){
-                   WishlistManager.addToWishlist(widget.product);
-                   
-                   ScaffoldMessenger.of(context).showSnackBar(
-                     const SnackBar(content: Text(" Added to Wishlist ❤️"))
-                   );
-                 }  else{
-                   WishlistManager.removeFromWishlist(widget.product["title"]);
-                   ScaffoldMessenger.of(context).showSnackBar(
-                     const SnackBar(content: Text("Removed from Wishlist"))
-                   );
-                 }
-                 
+                  setState(() => isInWishlist = !isInWishlist);
+                  if (isInWishlist) {
+                    WishlistManager.addToWishlist(widget.product);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Added to Wishlist ❤️")));
+                  } else {
+                    WishlistManager.removeFromWishlist(widget.product["title"]);
+                    ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(content: Text("Removed from Wishlist")));
+                  }
                 },
               ),
               IconButton(
                 icon: const Icon(Icons.share, color: Colors.black),
                 onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(content: Text("Share feature coming soon!")),
+                  showModalBottomSheet(
+                    context: context,
+                    shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                    ),
+                    builder: (context) {
+                      return Padding(
+                        padding: const EdgeInsets.all(16),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: FaIcon(FontAwesomeIcons.link,color: Colors.grey.shade800,),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(content: Text("Copy Link clicked")));
+                                  },
+                                ),
+                                const Text("Copy Link", style: TextStyle(fontSize: 12)),
+                              ],
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: FaIcon(FontAwesomeIcons.whatsapp, color: Colors.green),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(content: Text("WhatsApp clicked")));
+                                  },
+                                ),
+                                const Text("WhatsApp", style: TextStyle(fontSize: 12)),
+                              ],
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: FaIcon(FontAwesomeIcons.instagram,color: Colors.pink,),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(content: Text("Instagram clicked")));
+                                  },
+                                ),
+                                const Text("Instagram", style: TextStyle(fontSize: 12)),
+                              ],
+                            ),
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                IconButton(
+                                  icon: FaIcon(FontAwesomeIcons.telegram,color: Colors.indigoAccent,),
+                                  onPressed: () {
+                                    Navigator.pop(context);
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(content: Text("Telegram clicked")));
+                                  },
+                                ),
+                                const Text("Telegram", style: TextStyle(fontSize: 12)),
+                              ],
+                            ),
+                          ],
+                        ),
+                      );
+                    },
                   );
                 },
-              ),
+              )
+
             ],
             flexibleSpace: FlexibleSpaceBar(
               background: Container(
@@ -109,8 +172,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                         );
                       },
                     ),
-
-                    // PAGE INDICATOR DOTS
                     Positioned(
                       bottom: 16,
                       child: Row(
@@ -137,10 +198,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
               ),
             ),
-
           ),
-
-          // Body Content
           SliverToBoxAdapter(
             child: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -149,8 +207,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 children: [
                   // Category Badge
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 12, vertical: 6),
+                    padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
                     decoration: BoxDecoration(
                       color: Colors.blue.shade50,
                       borderRadius: BorderRadius.circular(20),
@@ -184,14 +241,11 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     children: [
                       ...List.generate(5, (index) {
                         if (index < rating.floor()) {
-                          return const Icon(Icons.star,
-                              color: Colors.amber, size: 20);
+                          return const Icon(Icons.star, color: Colors.amber, size: 20);
                         } else if (index < rating) {
-                          return const Icon(Icons.star_half,
-                              color: Colors.amber, size: 20);
+                          return const Icon(Icons.star_half, color: Colors.amber, size: 20);
                         } else {
-                          return Icon(Icons.star_border,
-                              color: Colors.grey.shade400, size: 20);
+                          return Icon(Icons.star_border, color: Colors.grey.shade400, size: 20);
                         }
                       }),
                       const SizedBox(width: 8),
@@ -229,8 +283,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                       ),
                       const SizedBox(width: 8),
                       Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 8, vertical: 4),
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                         decoration: BoxDecoration(
                           color: Colors.green.shade50,
                           borderRadius: BorderRadius.circular(4),
@@ -248,7 +301,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                   ),
                   const SizedBox(height: 8),
 
-                  // Original Price
                   Text(
                     "Original Price: \$${price.toStringAsFixed(2)} USD",
                     style: TextStyle(
@@ -270,10 +322,8 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ),
                   ),
                   const SizedBox(height: 8),
-
                   Text(
-                    widget.product["description"] ??
-                        "No description available",
+                    widget.product["description"] ?? "No description available",
                     style: TextStyle(
                       fontSize: 14,
                       color: Colors.grey.shade700,
@@ -281,7 +331,6 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ),
                   ),
                   const SizedBox(height: 24),
-
                   const Divider(),
                   const SizedBox(height: 16),
 
@@ -294,16 +343,10 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     ),
                   ),
                   const SizedBox(height: 12),
-
-                  _buildFeatureItem(Icons.local_shipping, "Free Delivery",
-                      "On orders above ₹500"),
-                  _buildFeatureItem(Icons.verified_user, "1 Year Warranty",
-                      "Manufacturer warranty included"),
-                  _buildFeatureItem(Icons.currency_rupee, "Cash on Delivery",
-                      "Pay when you receive"),
-                  _buildFeatureItem(Icons.refresh, "7 Days Return",
-                      "Easy return & refund policy"),
-
+                  _buildFeatureItem(Icons.local_shipping, "Free Delivery", "On orders above ₹500"),
+                  _buildFeatureItem(Icons.verified_user, "1 Year Warranty", "Manufacturer warranty included"),
+                  _buildFeatureItem(Icons.currency_rupee, "Cash on Delivery", "Pay when you receive"),
+                  _buildFeatureItem(Icons.refresh, "7 Days Return", "Easy return & refund policy"),
                   const SizedBox(height: 100),
                 ],
               ),
@@ -311,18 +354,12 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
           ),
         ],
       ),
-
-      // Bottom Navigation Bar
       bottomNavigationBar: Container(
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white,
           boxShadow: [
-            BoxShadow(
-              color: Colors.black12,
-              blurRadius: 10,
-              offset: const Offset(0, -2),
-            ),
+            BoxShadow(color: Colors.black12, blurRadius: 10, offset: const Offset(0, -2)),
           ],
         ),
         child: SafeArea(
@@ -331,14 +368,20 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
               Expanded(
                 child: ElevatedButton.icon(
                   onPressed: () {
+                    CartlistManager.addToCartlist(widget.product);
                     ScaffoldMessenger.of(context).showSnackBar(
                       SnackBar(
-                        content: Text(
-                            "${widget.product["title"]} added to cart! 🛒"),
+                        content: Text("${widget.product["title"]} added to cart! 🛒"),
                         duration: const Duration(seconds: 2),
                         action: SnackBarAction(
                           label: 'VIEW',
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+
+                              context,
+                              MaterialPageRoute(builder: (_) => const Cartscreen()),
+                            );
+                          },
                         ),
                       ),
                     );
@@ -350,34 +393,33 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                     foregroundColor: Colors.redAccent,
                     side: const BorderSide(color: Colors.redAccent, width: 2),
                     padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
                   ),
                 ),
               ),
               const SizedBox(width: 12),
-              Expanded(
-                child: ElevatedButton(
-                  onPressed: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text("Proceeding to checkout... 💳"),
-                        duration: Duration(seconds: 2),
-                      ),
-                    );
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.redAccent,
-                    foregroundColor: Colors.white,
-                    padding: const EdgeInsets.symmetric(vertical: 14),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: const Text("Buy Now"),
-                ),
+
+      Expanded(
+        child: ElevatedButton(
+          onPressed: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (_) => BuyNowScreen(product: widget.product),
               ),
+            );
+          },
+          style: ElevatedButton.styleFrom(
+            backgroundColor: Colors.redAccent,
+            foregroundColor: Colors.white,
+            padding: const EdgeInsets.symmetric(vertical: 14),
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(12),
+            ),
+          ),
+          child: const Text("Buy Now"),
+        ),
+      ),
             ],
           ),
         ),
@@ -413,10 +455,7 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
                 ),
                 Text(
                   subtitle,
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.grey.shade600,
-                  ),
+                  style: TextStyle(fontSize: 12, color: Colors.grey.shade600),
                 ),
               ],
             ),
@@ -424,5 +463,19 @@ class _ProductDetailPageState extends State<ProductDetailPage> {
         ],
       ),
     );
+  }
+}
+
+// CART MANAGER
+class CartlistManager {
+  static List<Map<String, dynamic>> cartlist = [];
+
+  static void addToCartlist(Map<String, dynamic> product) {
+    bool exists = cartlist.any((item) => item["title"] == product["title"]);
+    if (!exists) cartlist.add(product);
+  }
+
+  static void removeFromCartlist(String title) {
+    cartlist.removeWhere((item) => item["title"] == title);
   }
 }
